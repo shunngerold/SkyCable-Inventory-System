@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<odoo>
+
+    
+    <template id="configuration_report_view">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                    <link rel="stylesheet" href="/team-configuration/static/src/css/style.css"/>
+                      <div class="page">   
+                       
+                            <table class="table table-condensed">
+                            <div class="container" style="padding-bottom: 40px">
+                                <img t-att-src="'/report/barcode/Code128/'+o.identification_id" style="width:700px;height:70px;float: right;padding-left: 450px;"/>
+                                <h2 t-field="o.name"/> 
+                                <h3 t-field="o.identification_id" />
+                            </div>
+                                <thead>
+                                   
+
+                                    <tr >
+                                        <td><strong>Team Number</strong></td>
+                                        <td><strong>Transaction Number</strong></td>
+                                        <td><strong>Status</strong></td>
+                                        <td><strong>Team Type</strong></td>
+                                        <td><strong>Date</strong></td>
+                                    </tr>
+
+                                </thead>
+                                
+                                <tbody>
+                                    <tr t-foreach='o.history' t-as='line'>
+                                        <td><span t-esc="line.team_number_team"/></td>
+                                        <td><span t-esc="line.transaction_number"/></td>
+                                        <td><span t-field="line.status"/></td>
+                                        <td><span t-field="line.teamTypeHistory"/></td>
+                                        <td><span t-field="line.createdDateHistory"/></td>
+                                    </tr>
+                                </tbody>
+                                
+                            </table>
+                        </div> 
+                 </t>
+                </t>
+             </t>
+        </template>
+
+       
+
+</odoo>

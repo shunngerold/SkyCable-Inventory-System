@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Add Product Detail Page -->
+        <record id="inherit_view_id_product_detail" model="ir.ui.view">
+            <field name="name">etsi.product.detail.view.form.inherit</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form" />
+            <field name="arch" type="xml">
+                <!-- HIDE EXHAUSTED CHECK BOX -->
+                <xpath expr="//sheet/group/group[1]/field[@name='exhausted']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- READONLY INVENTORY REFERENCE -->
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <!-- READONLY FOR REAL QUANTITY INSIDE ONE2MANY (stock.inventory.line) -->
+                <xpath expr="//sheet/notebook[1]/page[1]//tree/field[@name='product_qty']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="//sheet/notebook[1]/page[1]//tree/field[@name='product_id']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <!-- set domain to catv5 or broadband -->
+                <xpath expr="//sheet/group/group[2]/field[@name='product_id']" position="attributes">
+                    <attribute name="domain">['|',('internal_ref_name','=','catv5'),('internal_ref_name','=','broadband'),('type','=','product')]</attribute>
+                </xpath>
+
+                <!-- filter selection -->
+                <xpath expr="//sheet/group/group[2]/field[@name='product_id']" position="after">
+                    <field name="filter2" invisible='1' />
+                </xpath>
+
+                <xpath expr="//sheet/notebook/page[1]" position="after">
+                    <page name="BROADBAND" string="BROADBAND">
+                        <field name="etsi_product_detail" context="{'default_etsi_filter': filter, 'default_etsi_products': product_id}" attrs="{'readonly': ['|',('state','=','done')]}">
+                            <tree editable="bottom">
+                                <field name="etsi_serials" />
+                                <field name="etsi_macs" />
+                                <field name="etsi_products" attrs="{'readonly': [('etsi_filter','=','product')]}" domain="[('type','=','product'),('internal_ref_name','=','broadband')]"  widget='selection'/>
+                                <field name="etsi_filter" invisible='1' />
+                                <field name="type_checker" invisible='1' />
+                                <field name="sky_receive_date" invisible='1' />
+                                <field name="sky_subscriber" invisible='1' />
+                                <field name="sky_date_issued" invisible='1' />
+                                <field name="sky_date_returned" invisible='1' />
+                                <field name="sky_team" invisible='1'/>
+                                <field name="sky_time_punch"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//sheet/notebook/page[2]" position="after">
+                    <page name="CATV5" string="CATV5">
+                        <field name="etsi_product_detail_2" context="{'default_etsi_filter_2': filter, 'default_etsi_products_2': product_id}" attrs="{'readonly': ['|',('state','=','done')]}">
+                            <tree editable="bottom">
+                                <field name="etsi_serials_2" />
+                                <field name="etsi_smart_card_2" />
+                                <field name="etsi_products_2" domain="[('type','=','product'),('internal_ref_name','=','catv5')]"  widget='selection' />
+                                <field name="etsi_filter_2" invisible='1' />
+                                <field name="type_checker_2" invisible='1' />
+                                <field name="sky_receive_date_2" invisible='1' />
+                                <field name="sky_subscriber_2" invisible='1' />
+                                <field name="sky_date_issued_2" invisible='1' />
+                                <field name="sky_date_returned_2" invisible='1' />
+                                <field name="sky_team_2" invisible='1' />
+                                <field name="sky_time_punch_2"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//sheet/group/group[1]/field[2]" position="after">
+                    <field name="employee_name_inv" string = "Employee name" attrs="{'readonly': [('state','=','done')]}"/>
+                </xpath>
+                
+                <xpath expr="//sheet/group/group[2]/field[1]" position="after">
+                    <field name="receive_date_inv" attrs="{'readonly': [('state','=','done')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Hide Force Accounting -->
+        <record id="etsi_hide_accounting_view_form_inherit" model="ir.ui.view">
+            <field name="name">etsi.hide.accounting.view.form.inherit</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock_account.view_inventory_form_inherit" />
+            <field name="arch" type="xml">
+                <!-- Hide Force Accounting Field -->
+                <xpath expr="//field[@name='accounting_date']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- Lines ID Count Field -->
+                <xpath expr="//field[@name='accounting_date']" position="after">
+                    <field name="lineidscount2" invisible="True" />
+                </xpath>
+                <xpath expr="//sheet/notebook[1]//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

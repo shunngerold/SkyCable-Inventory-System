@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <t name="Homepage" priority="29" t-name="website.homepage">
+        <t t-call="website.layout">
+          <t t-set="pageName" t-value="'homepage'"/>
+          <div id="wrap" class="oe_structure oe_empty">
+            <section class="s_text_block_image_fw oe_img_bg mt0 o_animate o_anim_fade_in" style="background-image: url(&quot;/web/image/website.s_background_image_02&quot;); background-position: 45.93% 98.32%; animation-play-state: paused;">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 mt64 bg-black-25 mb92">
+                    <h2 style="text-align: left;">
+                      <span style="font-size: 62px;">Services</span>
+                    </h2>
+                    <h3>
+                      <span style="font-size: 14px;" class="text-white">From business and systems analysis, project management, pre implementation, implementation, post implementation to after sales, Ekkremis Solutions Inc. (ESI) offers a complete range of solutions and services essential in solving your integration challenges. ESI will also assist you in implementing the chosen services or solutions as flawlessly as possible.</span>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="parallax s_parallax_slider oe_custom_bg oe_img_bg mt0" style="background-image: url(&quot;/web/image/website.s_parallax_slider_default_image&quot;);" data-scroll-background-ratio="0.3">
+              <div class="oe_structure"/>
+            </section>
+            <section class="s_three_columns o_animate o_anim_fade_in mt32" style="animation-play-state: paused;">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4 mt32 mb48">
+                    <img class="img img-responsive" src="/web/image/654/1.png" alt="FlexERP - Sample 1 for three columns" data-original-title="" title=""/>
+                    <h4 class="mt16">
+                      <span style="font-family: Poppins, sans-serif; font-size: 14px; font-weight: 600;" class="bg-white-75 text-black">Business Analysis and Process Developments</span>
+                    </h4>
+                    <p>
+                      <span style="font-family: Poppins, sans-serif; text-align: justify;" class="bg-white-75 text-black">We analyze the nature of business, defining process gaps and areas where automated solutions can be implemented to enable significant process and cost efficiencies as well as improved service delivery.</span>
+                    </p>
+                  </div>
+                  <div class="col-md-4 mt32 mb48">
+                    <img class="img img-responsive" src="/web/image/655/2.png" alt="FlexERP - Sample 2 for three columns"/>
+                    <h4 class="mt16">
+                      <span style="font-family: Poppins, sans-serif; font-size: 14px; font-weight: 600;" class="bg-white-75 text-black">It Solutions</span>
+                    </h4>
+                    <p>
+                      <span style="font-family: Poppins, sans-serif; text-align: justify;" class="bg-white-75 text-black">We offer packaged IT System Solutions that would effectively address and automate processes to significantly improve service delivery.</span>
+                    </p>
+                  </div>
+                  <div class="col-md-4 mt32 mb48">
+                    <img class="img img-responsive" src="/web/image/656/3.png" alt="FlexERP - Sample 3 for three columns"/>
+                    <h4 class="mt16">
+                      <span style="font-family: Poppins, sans-serif; font-size: 14px; font-weight: 600;" class="bg-white-75 text-black">Managed Service</span>
+                    </h4>
+                    <p>
+                      <span style="font-family: Poppins, sans-serif; text-align: justify;" class="bg-white-75 text-black">We have a team of professionals and highly skilled IT personnel that can handle end-to-end management and maintenance of your IT systems and processes such that you need not to put up your own IT team.</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="s_three_columns mt0 o_animate o_anim_fade_in" style="animation-play-state: paused;">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4 mt32 mb48">
+                    <img class="img img-responsive" src="/web/image/657/4.png" alt="FlexERP - Sample 1 for three columns" data-original-title="" title=""/>
+                    <h4 class="mt16">
+                      <span style="font-family: Poppins, sans-serif; font-size: 14px; font-weight: 600;" class="bg-white-75 text-black">Project Management</span>
+                    </h4>
+                    <p>
+                      <span style="font-family: Poppins, sans-serif; text-align: justify;" class="bg-white-75 text-black">We analyze the nature of business, defining process gaps and areas where automated solutions can be implemented to enable significant process and cost efficiencies as well as improved service delivery.</span>
+                    </p>
+                  </div>
+                  <div class="col-md-4 mt32 mb48">
+                    <img class="img img-responsive" src="/web/image/658/5.png" alt="FlexERP - Sample 2 for three columns"/>
+                    <h4 class="mt16">
+                      <span style="font-family: Poppins, sans-serif; font-size: 14px; font-weight: 600;" class="bg-white-75 text-black">Quality Assurance and Testing</span>
+                    </h4>
+                    <p>
+                      <span style="font-family: Poppins, sans-serif; text-align: justify;" class="bg-white-75 text-black">We test services to ensure optimum performance of system(s) and all its functionalities that will enable effective usability of business users.</span>
+                    </p>
+                  </div>
+                  <div class="col-md-4 mt32 mb48">
+                    <img class="img img-responsive" src="/web/image/659/6.png" alt="FlexERP - Sample 3 for three columns" data-original-title="" title=""/>
+                    <h4 class="mt16">
+                      <span style="font-family: Poppins, sans-serif; font-size: 14px; font-weight: 600;" class="bg-white-75 text-black">Service Desk Support</span>
+                    </h4>
+                    <p>
+                      <span style="font-family: Poppins, sans-serif; text-align: justify;" class="bg-white-75 text-black">We provide service desk support to cover Level 1 system or process issues for all internal business users. This includes definition of levels 1, 2 and 3 escalation and resolution processes.</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="s_three_columns mt0 o_animate o_anim_fade_in mb0" style="animation-play-state: paused;">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-4 mt32 mb48 o_animate" style="animation-play-state: paused;">
+                    <img class="img img-responsive o_animate" src="/web/image/660/7.png" alt="FlexERP - Sample 1 for three columns" data-original-title="" title="" style="animation-play-state: paused;"/>
+                    <h4 class="mt16">
+                      <span style="font-family: Poppins, sans-serif; font-size: 14px; font-weight: 600;" class="bg-white-75 text-black">System Implementation and Integration</span>
+                    </h4>
+                    <p>
+                      <span style="font-family: Poppins, sans-serif; text-align: justify;" class="bg-white-75 text-black">We will handle implementation of any system solution which the business acquires to include ensuring seamless integration to existing systems.</span>
+                    </p>
+                  </div>
+                  <div class="col-md-4 mt32 mb48">
+                    <img class="img img-responsive" src="/web/image/661/8.png" alt="FlexERP - Sample 2 for three columns" data-original-title="" title=""/>
+                    <h4 class="mt16">
+                      <span style="font-family: Poppins, sans-serif; font-size: 14px; font-weight: 600;" class="bg-white-75 text-black">Trading</span>
+                    </h4>
+                    <p>
+                      <span style="font-family: Poppins, sans-serif; text-align: justify;" class="bg-white-75 text-black">Ekkremis Solutions, Incorporated also offers various computer hardwares, devices and peripherals supportive of your business needs.</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <div id="myCarousel1671180939268" class="carousel quotecarousel slide mt64 mb92" data-interval="10000">
+              <ol class="carousel-indicators mb0">
+                <li data-target="#myCarousel1671180939268" data-slide-to="0" class="active">
+                  <img src="/web/image/597/R.jfif" class="pull-left" style="width: 100%;"/>
+                </li>
+              </ol>
+              <ol class="carousel-indicators mb0">
+                <li data-target="#myCarousel1671180939268" data-slide-to="0">1</li>
+                <li data-target="#myCarousel1671180939268" data-slide-to="1"/>
+              </ol>
+            </div>
+            <section class="parallax s_parallax_slider oe_custom_bg oe_img_bg o_animate o_anim_zoom_in" style="background-image: url(&quot;/web/image/website.s_parallax_slider_default_image&quot;); animation-play-state: paused;" data-scroll-background-ratio="0.3">
+              <div>
+                <div>
+                  <div class="oe_structure"> </div>
+                </div>
+              </div>
+            </section>
+            <section class="parallax s_parallax_slider oe_custom_bg oe_img_bg" style="background-image: url(&quot;/web/image/website.s_parallax_slider_default_image&quot;);" data-scroll-background-ratio="1">
+              <div>
+                <div>
+                  <div class="oe_structure"/>
+                </div>
+              </div>
+            </section>
+          </div>
+        </t>
+      </t>
+      
+</odoo>

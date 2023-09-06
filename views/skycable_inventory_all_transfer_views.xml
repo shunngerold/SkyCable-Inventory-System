@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- =================== Operations ==================== -->
+    <!-- Add page -> Teams -->
+    <record id="stock_view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.view.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <!--========== End Smart Button for issuances=============-->
+            <!-- ======== hide mark as to do =========-->
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- hide other states -->
+            <field name="state" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,done" />
+            </field>
+            <!-- source document or origin connection -->
+            <field name="origin" position="after">
+                <field name="etsi_team_issuance_id" invisible="True" />
+            </field>
+            <!-- hide delivery type, procurement group, priority -->
+            <field name="move_type" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <field name="group_id" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <field name="priority" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <!-- partner field renamed to Subscriber -->
+            <field name="partner_id" position="attributes">
+                <attribute name="string">Subscriber</attribute>
+            </field>
+            <!-- renamed schedule date to service date -->
+            <field name="min_date" position="attributes">
+                <attribute name="string">Service Date</attribute>
+            </field>
+            <xpath expr="//sheet/notebook/page[1]" position="after">
+                <page name="team" string="Teams">
+                    <group>
+                        <field name="etsi_teams_member_no"
+                            attrs="{'readonly':[('state', 'in', 'done')], 'required':[('teller', 'in', ('others','return'))]}" />
+                        <!-- for push -->
+                        <field name="etsi_teams_member_name"
+                            attrs="{'readonly':[('state', 'in', 'done')]}"
+                            options="{'no_quick_create': True, 'no_create_edit' : True, 'no_open' : True}" />
+                        <!-- end push -->
+                        <field name="etsi_teams_id" attrs="{'readonly':[('state', 'in', 'done')]}"
+                            options="{'no_quick_create': True, 'no_create_edit' : True, 'no_open' : True}" />
+                    </group>
+                    <field name="etsi_teams_line_ids" attrs="{'readonly':[('state', 'in', 'done')]}">
+                        <tree editable="bottom" create="false" delete="false">
+                            <field name="team_members_lines" readonly="1" />
+                            <field name="etsi_teams_replace"
+                                attrs="{'readonly':[('etsi_teams_temporary', '=', False)], 'required' :[(('etsi_teams_temporary','=',True))]}" />
+                            <field name="etsi_teams_temporary" />
+                            <field name="etsi_teams_member_name_copy" invisible="1" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- HIDE PRINTING -->
+    <record id="view_pullout_inherit" model="ir.ui.view">
+        <field name="name">stock.pullout.view.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <!-- Hide the print button -->
+            <xpath expr="//header/button[@name='616']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data> 
+    <record model="ir.ui.view" id="drops_tree_view">
+        <field name="name">serials.tree</field>
+        <field name="model">etsi.inventory</field>
+        <field name="arch" type="xml">
+            <tree string="Drops Tree" create="false" delete="false" edit="false">
+                <field name="type_checker_02" invisible='True'/>
+                <field name="type_checker"/>
+                <field name="etsi_product_id"/>
+                <field name="etsi_description"/>
+                <field name="etsi_product_quantity"/>
+                <field name="etsi_product_uom"/>
+                <field name="etsi_employee_in" string="Employee" />
+                <field name="etsi_team_in" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="serials_tree_view">
+        <field name="name">serials.tree</field>
+        <field name="model">etsi.inventory</field>
+        <field name="arch" type="xml">
+            <tree string="Serial Tree" create="false" delete="false" edit="false">
+                <field name="type_checker_02" invisible='True'/>
+                <field name="type_checker"/>
+                <field name="etsi_product_id"/>
+                <field name="etsi_description"/>
+                <field name="etsi_serial"/>
+                <field name="etsi_mac"/>
+                <field name="etsi_smart_card"/>
+                <field name="etsi_product_quantity"/>
+                <field name="etsi_product_uom"/>
+                <field name="etsi_employee_in" string="Employee" />
+                <field name="etsi_product_name" invisible='True'/>
+                <!-- ADDING NEW FIELDS -->
+                <field name="etsi_punched_date_in" />
+                <field name="etsi_subscriber_in" invisible='True'/>
+                <field name="etsi_receive_date_in" />
+                <field name="etsi_date_issued_in" />
+                <field name="etsi_date_returned_in" />
+                <field name="etsi_team_in" />
+                <field name="etsi_status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="etsi_inventory_form" model="ir.ui.view">
+        <field name="name">serials.form</field>
+        <field name="model">etsi.inventory</field>
+        <field name="arch" type="xml">
+            <form  create="false" delete="false" edit="false">   
+                <sheet>
+                    <group  string="Product Information">
+                        <group>
+                            <field name="type_checker" />
+                            <field name="etsi_product_id"/>
+                            <field name="etsi_description"/>
+                            <field name="etsi_product_uom"/>
+                        </group>
+                        <group>
+                            <field name="etsi_serial"/>
+                            <field name="etsi_mac"/>
+                            <field name="etsi_smart_card"/>
+                        </group>
+                    </group>
+                    <group  string="Other Information">
+                        <group>
+                            <field name="etsi_employee_in" string="Employee" />
+                            <field name="etsi_punched_date_in" />
+                            <field name="etsi_receive_date_in" />    
+                        </group>
+                        <group>
+                            <field name="etsi_date_issued_in" />
+                            <field name="etsi_date_returned_in" />
+                            <field name="etsi_team_in" />
+                            <field name="etsi_status"/>
+                        </group>
+                    </group>
+
+                    <group  string="History">
+                        <field name="etsi_history_lines" nolabel="1"> 
+                            <tree  editable="bottom" create="false" delete="false">
+                                <field name="etsi_operation"/>
+                                <field name="etsi_transaction_description"/>
+                                <field name="etsi_history_quantity"/>
+                                <field name="etsi_transaction_num"/>
+                                <field name="etsi_employee"/>
+                                <field name="etsi_teams"/>
+                                <field name="etsi_action_date"/>
+                                <field name="etsi_status"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>     
+            </form>
+        </field>
+    </record>
+
+    <record id="etsi_inventory_view_search" model="ir.ui.view">
+        <field name="name">etsi.inventory.view.search</field>
+        <field name="model">etsi.inventory</field>
+        <field name="arch" type="xml">
+            <search string="etsi_search">
+                <field name="etsi_serial" string="Serial" filter_domain="[('etsi_serial','ilike',self)]"/>
+                <field name="etsi_mac" string="Mac" filter_domain="[('etsi_mac','ilike',self)]"/>
+                <field name="etsi_smart_card" string="Smart Card" filter_domain="[('etsi_smart_card','ilike',self)]"/>
+                <field name="etsi_product_id" string="Material Code" filter_domain="[('etsi_product_id','ilike',self)]"/>
+                <field name="etsi_team_in" string="Team" filter_domain="[('etsi_team_in','ilike',self)]"/>
+                <field name="etsi_employee_in" string="Employee" filter_domain="[('etsi_employee_in','ilike',self)]"/>
+                <filter name="filter_type_CATV" string="CATV" domain="[('type_checker','=','catv5')]"/>
+                <filter name="filter_type_MODEM" string="BROADBAND" domain="[('type_checker','=','broadband')]"/>
+                <filter name="filter_type_DROPS" string="DROPS" domain="[('type_checker','=','drops')]"/>
+                <separator/>
+                <group>
+                <filter name="filter_type_available" string="Available" domain="[('etsi_status','=','available')]"/>
+                <filter name="filter_type_deployed" string="Deployed" domain="[('etsi_status','=','deployed')]"/>
+                <filter name="filter_type_used" string="Used" domain="[('etsi_status','=','used')]"/>
+                <filter name="filter_type_returned" string="Returned" domain="[('etsi_status','=','returned')]"/>
+                <filter name="filter_type_damaged" string="Damaged" domain="[('etsi_status','=','damaged')]"/>
+                <filter name="filter_type_onhand" string="On-Hand" domain="[('etsi_status','=','onhand')]"/>
+                <filter name="filter_type_delivery" string="Delivery" domain="[('etsi_status','=','delivery')]"/>
+                <filter name="filter_type_delivered" string="Delivered" domain="[('etsi_status','=','delivered')]"/>
+                <filter name="filter_etsi_team_in" string="Team" context="{'group_by': 'etsi_team_in'}" />
+                <filter name="filter_type_type_checher" string="Types" context="{'group_by': 'type_checker_02'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="View_all_serial_action" model="ir.actions.act_window">
+        <field name="name">View_all_serial</field>
+        <field name="res_model">etsi.inventory</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,form,tree</field>
+        <field name="view_id" ref="serials_tree_view"/>
+        <field name="context">{'search_default_filter_type_CATV':1,'search_default_filter_type_MODEM':1,'search_default_filter_type_DROPS':0} </field>
+        <field name="domain">[('type_checker','!=','drops'),('type_checker','!=','others')]</field>
+
+    </record>
+
+    <record id="View_all_drops_action" model="ir.actions.act_window">
+        <field name="name">View All Drops</field>
+        <field name="res_model">etsi.inventory</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,form,tree</field>
+        <field name="view_id" ref="drops_tree_view"/>
+        <field name="context">{'search_default_filter_type_DROPS':1} </field>
+        <field name="domain">[('type_checker','=','drops')]</field>
+        <!-- <field name="context">{'search_default_filter_type_CATV':1,'search_default_filter_type_MODEM':1,'search_default_filter_type_available':0,'search_default_filter_type_deployed':0,'search_default_filter_type_used':0,'search_default_filter_type_returned':0,'search_default_filter_type_damaged':0,'search_default_filter_type_onhand':0,'search_default_filter_type_delivery':0,'search_default_filter_type_delivered':0} </field> -->
+    </record>
+
+    
+
+    <record id="action_inventory_form20" model="ir.actions.act_window">
+        <field name="name">Inventory Log</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.inventory</field>
+        <field name="view_type">form</field>
+        <field name="search_view_id" ref="stock.view_inventory_filter"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to start an inventory.
+          </p><p>
+            Periodical Inventories are used to count the number of products
+            available per location. You can use it once a year when you do
+            the general inventory or whenever you need it, to adapt the
+            current inventory level of a product.
+          </p>
+        </field>
+    </record>
+
+    <record id="view_inventory_tree2" model="ir.ui.view">
+        <field name="name">stock.inventory.tree</field>
+        <field name="model">stock.inventory</field>
+        <field name="act_window_id" ref="action_inventory_form20"/>
+        <field name="arch" type="xml">
+            <tree string="Lot/Serial Number Inventory" decoration-muted="state == 'cancel'" create="false" edit="false">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_inventory_form" model="ir.ui.view">
+        <field name="name">stock.inventory.form</field>
+        <field name="model">stock.inventory</field>
+        <field name="act_window_id" ref="action_inventory_form20"/>
+        <field name="arch" type="xml">
+            <form string="Inventory Adjustment" create="false" edit="false">
+            <header>
+                <button name="prepare_inventory" states="draft" string="Start Inventory" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+                <button name="action_done" states="confirm" string="Validate Inventory" type="object" class="oe_highlight" groups="stock.group_stock_manager"/>
+                <button name="action_cancel_draft" states="cancel" string="Set to Draft" type="object"/>
+                <button name="action_cancel_draft" states="confirm" string="Cancel Inventory" type="object"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirm,done"/>
+            </header>
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_inventory_line_tree"
+                        class="oe_stat_button"
+                        icon="fa-building-o"
+                        type="object"
+                        help="List view of lines"
+                        groups="base.group_no_one"
+                        states="confirm">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_text">Details</span>
+                        </div>
+                    </button>
+                </div>
+                <div class="oe_title">
+                    <label for="name" class="oe_edit_only"/>
+                    <h1><field name="name" placeholder="e.g. Annual inventory"/></h1>
+                </div>
+                <group>
+                    <group>
+                        <field name="location_id" domain="[('usage','not in', ['supplier','production'])]" groups="stock.group_stock_multi_locations"/>
+                        <field name="filter" string="Inventory of" widget='radio' attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="employee_name_inv" string = "Employee name" attrs="{'readonly': [('state','=','done')]}"/>
+                        <field name="exhausted" attrs="{'invisible': [('filter', 'in', ('owner', 'product_owner','lot','pack','partial', 'product'))]}"/>
+                    </group>
+                    <group>
+                        <field name="date"/>
+                        <field name="receive_date_inv" attrs="{'readonly': [('state','=','done')]}"/>
+                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                        <field name="product_id" domain="[('type','=','product')]" attrs="{'invisible': [('filter', 'not in', ('product', 'product_owner'))], 'required': [('filter', 'in', ('product', 'product_owner'))]}"/>
+                        <field name="category_id" attrs="{'invisible': [('filter', 'not in','category')], 'required': [('filter', 'in', 'category')]}" options="{'no_create': True}"/>
+                        <field name="lot_id" attrs="{'invisible': [('filter', '!=', 'lot')], 'required': [('filter', '=', 'lot')]}" groups="stock.group_production_lot" />
+                        <field name="partner_id" attrs="{'invisible': [('filter', 'not in', ('owner', 'product_owner'))], 'required': [('filter', 'in', ('owner', 'product_owner'))]}" groups="stock.group_tracking_owner"/>
+                        <field name="package_id" attrs="{'invisible': [('filter', '!=', 'pack')], 'required': [('filter', '=', 'pack')]}" groups="stock.group_tracking_lot"/>
+                    </group>
+                </group>
+                <notebook attrs="{'invisible':[('state','=','draft')]}">
+                    <page string="Inventory Details" >
+                        <button name="reset_real_qty" states="confirm" string="⇒ Set quantities to 0" type="object" class="oe_link oe_right" groups="stock.group_stock_user"/>
+                        <field name="line_ids" string="Inventory Details" context="{'default_location_id': location_id,  'default_product_id': product_id, 'default_prod_lot_id': lot_id, 'default_package_id': package_id, 'default_partner_id': partner_id}" mode="tree,kanban">
+                            <tree string="Inventory Details" editable="bottom" decoration-info="product_qty != theoretical_qty" decoration-danger="theoretical_qty &lt; 0">
+                                <field name="product_id"  domain="[('type','=','product')]"/>
+                                <field name="product_uom_id" string="UoM" groups="product.group_uom"/>
+                                <field name="location_id" domain="[('id', 'child_of', parent.location_id)]" groups="stock.group_stock_multi_locations"/>
+                                <field name="prod_lot_id" domain="[('product_id', '=', product_id)]" context="{'default_product_id': product_id}"  groups="stock.group_production_lot"/>
+                                <field name="package_id" domain="['|', ('location_id','=', False), ('location_id', '=', location_id)]" groups="stock.group_tracking_lot"/>
+                                <field name="partner_id" groups="stock.group_tracking_owner"/>
+                                <field name="theoretical_qty" readonly="1"/>
+                                <field name="product_qty" string="Real Quantity"/>
+                                <field name="state" invisible="True"/>
+                            </tree>
+                            <kanban class="o_kanban_mobile">
+                                <field name="product_id"  domain="[('type','=','product')]"/>
+                                <field name="product_uom_id" groups="product.group_uom" string="UoM"/>
+                                <field name="location_id" domain="[('id', 'child_of', parent.location_id)]" groups="stock.group_stock_multi_locations"/>
+                                <field name="prod_lot_id" domain="[('product_id', '=', product_id)]" context="{'default_product_id': product_id}"  groups="stock.group_production_lot"/>
+                                <field name="package_id" domain="['|', ('location_id','=', False), ('location_id', '=', location_id)]"/>
+                                <field name="partner_id"/>
+                                <field name="theoretical_qty" readonly="1"/>
+                                <field name="product_qty" string="Real Quantity"/>
+                                <field name="state" invisible="True"/>
+
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div t-attf-class="oe_kanban_global_click_edit
+                                                           #{record.product_qty.raw_value!=record.theoretical_qty.raw_value ? 'oe_kanban_color_6' : ''}
+                                                           #{record.theoretical_qty.raw_value&lt;0 ? 'oe_kanban_color_2' : ''}">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <strong>
+                                                        <field name='product_id'/>
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 text-muted">
+                                                    <span><t t-esc='record.location_id.string'/>: <t t-esc='record.location_id.value'/></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 text-muted">
+                                                    <span><t t-esc='record.theoretical_qty.string'/>: <t t-esc='record.theoretical_qty.value'/></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 text-muted">
+                                                    <span><t t-esc='record.product_qty.string'/>: <t t-esc='record.product_qty.value'/></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                        </field>
+                        <p></p>
+                        <h3 class="oe_grey">Notes</h3>
+                        <ul class="oe_grey"><li>Inventory adjustments will be made by comparing the theoretical and the checked quantities.</li>
+                        <li>You can delete lines to ignore some products.</li>
+                        <li>If a product is not at the right place, set the checked quantity to 0 and create a new line with correct location.</li>
+                        </ul>
+                    </page>
+                    <page name="CATV5" string="CATV5">
+                        <field name="etsi_product_detail_2" context="{'default_etsi_filter_2': filter, 'default_etsi_products_2': product_id}" attrs="{'readonly': ['|',('state','=','done')]}">
+                            <tree editable="bottom">
+                                <field name="etsi_serials_2" />
+                                <field name="etsi_smart_card_2" />
+                                <field name="etsi_products_2" domain="[('type','=','product'),('internal_ref_name','=','catv5')]"  widget='selection' />
+                                <field name="etsi_filter_2" invisible='1' />
+                                <field name="type_checker_2" invisible='1' />
+                                <field name="sky_receive_date_2" invisible='1' />
+                                <field name="sky_subscriber_2" invisible='1' />
+                                <field name="sky_date_issued_2" invisible='1' />
+                                <field name="sky_date_returned_2" invisible='1' />
+                                <field name="sky_team_2" invisible='1' />
+                                <field name="sky_time_punch_2"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                    <page name="BROADBAND" string="BROADBAND">
+                        <field name="etsi_product_detail" context="{'default_etsi_filter': filter, 'default_etsi_products': product_id}" attrs="{'readonly': ['|',('state','=','done')]}">
+                            <tree editable="bottom">
+                                <field name="etsi_serials" />
+                                <field name="etsi_macs" />
+                                <field name="etsi_products" attrs="{'readonly': [('etsi_filter','=','product')]}" domain="[('type','=','product'),('internal_ref_name','=','broadband')]"  widget='selection'/>
+                                <field name="etsi_filter" invisible='1' />
+                                <field name="type_checker" invisible='1' />
+                                <field name="sky_receive_date" invisible='1' />
+                                <field name="sky_subscriber" invisible='1' />
+                                <field name="sky_date_issued" invisible='1' />
+                                <field name="sky_date_returned" invisible='1' />
+                                <field name="sky_team" invisible='1'/>
+                                <field name="sky_time_punch"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                    <page string="Inventory Adjustments" attrs="{'invisible': [('state', '!=', 'done')]}">
+                        <field name="move_ids">
+                            <tree decoration-muted="scrapped == True" string="Stock Moves">
+                                <field name="product_id"/>
+                                <field name="product_uom_qty"/>
+                                <field name="product_uom" options="{'no_open': True, 'no_create': True}" string="Unit of Measure" groups="product.group_uom"/>
+                                <field name="picking_id" invisible="1" />
+                                <field name="create_date" invisible="1" />
+                                <field name="date_expected" invisible="1" />
+                                <field name="scrapped" invisible="1"/>
+                                <field name="location_id"/>
+                                <field name="location_dest_id"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_stock_move_tree_all">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_inventory_tree2"/>
+            <field name="act_window_id" ref="action_inventory_form20"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_stock_move_form_all">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_inventory_form"/>
+        <field name="act_window_id" ref="action_inventory_form20"/>
+    </record>
+    <record id="product_template_search_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.search.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <filter name="filter_type_CATV" string="CATV" domain="[('internal_ref_name','=','catv5')]"/>
+                <filter name="filter_type_MODEM" string="BROADBAND" domain="[('internal_ref_name','=','broadband')]"/>
+                <filter name="filter_type_DROPS" string="DROPS" domain="[('internal_ref_name','=','drops')]"/>
+                <filter name="filter_type_OTHERS" string="OTHERS" domain="[('internal_ref_name','=','others')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem 
+        id="view_all_serial_menu" 
+        name="View All Serials" 
+        action="View_all_serial_action" 
+        web_icon="skycable_employee_inventory,static/img/view_all_serials_icon.png"
+        sequence=""/>   
+
+    <menuitem 
+        id="view_all_serial_menu_drops" 
+        name="View All Drops" 
+        action="View_all_drops_action" 
+        web_icon="skycable_employee_inventory,static/img/view_all_serials_icon.png"
+        sequence=""/>   
+        
+    <menuitem name="Inventory Log" action="action_inventory_form20" id="menu_action_inventory_form" parent="stock.menu_stock_inventory_control" sequence="30"/>
+    </data>
+</odoo>

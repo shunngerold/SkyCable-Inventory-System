@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <t name="Contact us" t-name="website.contactus">
+    <t t-call="website.layout">
+      <div id="wrap">
+        <div class="oe_structure"/>
+        <div class="container">
+          <h1>Contact us</h1>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="oe_structure">
+                <div>
+                  <p>Contact us about anything related to our company or services.</p>
+                  <p>We'll do our best to get back to you as soon as possible.</p>
+                  <h2 class="contactus__title" data-sr-id="2" style="margin: 0px 0px 1.5rem; font-size: var(--biggest-font-size); color: rgb(20, 20, 20); font-family: Poppins, sans-serif; visibility: visible; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transition: opacity 3.5s cubic-bezier(0.5, 0, 0, 1) 0.2s, transform 3.5s cubic-bezier(0.5, 0, 0, 1) 0.2s;">Reach out to us today via any of the given information.</h2>
+                </div>
+              </div>
+              <div class="text-center mt64" name="mail_button">
+                <a t-attf-href="mailto:{{ res_company.email }}" class="btn btn-primary" id="o_contact_mail">Send us an email</a>
+              </div>
+            </div>
+            <div class="col-md-4 mb32">
+              <t t-call="website.company_description"/>
+            </div>
+          </div>
+        </div>
+        <div class="oe_structure"/>
+      </div>
+    </t>
+  </t>
+</odoo>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="drop_view_tree" model="ir.ui.view">
+        <field name="name">drop.issuance.view.tree</field>
+        <field name="model">stock.drops.issuance</field>
+        <field name="arch" type="xml">
+            <tree create="0" import="0">
+                <field name="ref_number"/>
+                <field name="import_batch" />
+                <field name="callid" />
+                <field name="employee_name" />
+                <field name="date_time" />
+                <field name="completion_date" />
+                <field name="task_type_category" />
+                <field name="assigned_engineer" />
+                <field name="counter_drops" />
+                <field name="stats" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="drop_view_form" model="ir.ui.view">
+        <field name="name">drop.issuance.view.form</field>
+        <field name="model">stock.drops.issuance</field>
+        <field name="arch" type="xml">
+            <form string="Drops Issuance Form">
+                <sheet>
+                    <group string="Transaction Information" >
+                        <group>
+                            <field name="callid" readonly="1"/>
+                            <field name="import_batch" readonly="1"/>
+                            <field name="employee_name" readonly="1"/>
+                            <field name="date_time" readonly="1"/>
+                            <field name="counter_drops" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="task_type_category" readonly="1"/>
+                            <field name="assigned_engineer" readonly="1"/>
+                            <field name="completion_date" readonly="1"/>
+                            <field name="stats" readonly="1"/>
+                            <field name="ref_number" readonly="1"/>
+                        </group>
+                    </group>    
+                    <group string="Drops">
+                        <group>
+                            <!-- DROP 1 -->
+                            <field name="rg_6_cable_black_wo_mess" invisible="1"/>
+                            <field name="rg_6_cable_black_wo_mess_qty" string="RG-6 CABLE BLACK W/O MESS" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 2 -->
+                            <field name="rg_6_cable_black_w_mess" invisible="1"/>
+                            <field name="rg_6_cable_black_w_mess_qty" string="RG-6 CABLE BLACK W/ MESS" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 3 -->
+                            <field name="rg_6_connector" invisible="1"/>
+                            <field name="rg_6_connector_qty" string="RG-6 CONNECTOR" readonly="1"/>
+                        </group>
+                        <group>
+                             <!-- DROP 4 -->
+                            <field name="ground_block" invisible="1"/>
+                            <field name="ground_block_qty" string="GROUND BLOCK" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 5 -->
+                            <field name="two_way_splitter" invisible="1"/>
+                            <field name="two_way_splitter_qty" string="2 WAY SPLITTER" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 6 -->
+                            <field name="ground_rod" invisible="1"/>
+                            <field name="ground_rod_qty" string="GROUND ROD" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 7 -->
+                            <field name="span_clamp" invisible="1" />
+                            <field name="span_clamp_qty" string="SPAN CLAMP" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 8 -->
+                            <field name="high_pass_filter" invisible="1"/>
+                            <field name="high_pass_filter_qty" string="HIGH PASS FILTER" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 9 -->
+                            <field name="isolator" invisible="1"/>
+                            <field name="isolator_qty" string="ISOLATOR" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 10 -->
+                            <field name="ground_clamp" invisible="1"/>
+                            <field name="ground_clamp_qty" string="GROUND CLAMP" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 11 -->
+                            <field name="attenuator_3db" invisible="1"/>
+                            <field name="attenuator_3db_qty" string="ATTENUATOR 3dB" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 12 -->
+                            <field name="attenuator_6db" invisible="1"/>
+                            <field name="attenuator_6db_qty" string="ATTENUATOR 6dB" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 13 -->
+                            <field name="cable_clip" invisible="1"/>
+                            <field name="cable_clip_qty" string="CABLE CLIP" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 14 -->
+                            <field name="cable_tag" invisible="1"/>
+                            <field name="cable_tag_qty" string="CABLE TAG" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 15 -->
+                            <field name="f_81_connector" invisible="1"/>
+                            <field name="f_81_connector_qty" string="F-81 CONNECTOR" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 16 -->
+                            <field name="fiber_optic_apc_connector" invisible="1"/>
+                            <field name="fiber_optic_apc_connector_qty" string="FIBER OPTIC APC CONNECTOR" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 17 -->
+                            <field name="fiber_optic_patch_cord_bipc_2mtrs" invisible="1"/>
+                            <field name="fiber_optic_patch_cord_bipc_2mtrs_qty" string="FIBER OPTIC PATCH CORD BIPC 2mtrs" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 18 -->
+                            <field name="fiber_optic_patch_cord_sc_apc_to_sc_apc_3mtrs" invisible="1"/>
+                            <field name="fiber_optic_patch_cord_sc_apc_to_sc_apc_3mtrs_qty" string="FIBER OPTIC PATCH CORD SC/APC to SC/APC 3mtrs" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 19 -->
+                            <field name="fiber_optic_patch_cord_sc_apc_to_sc_apc_6mtrs" invisible="1"/>
+                            <field name="fiber_optic_patch_cord_sc_apc_to_sc_apc_6mtrs_qty" string="FIBER OPTIC PATCH CORD SC/APC to SC/APC 6mtrs" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 20 -->
+                            <field name="ground_wire" invisible="1"/>
+                            <field name="ground_wire_qty" string="GROUND WIRE" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 21 -->
+                            <field name="p_hook" invisible="1"/>
+                            <field name="p_hook_qty" string="P-HOOK" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 22 -->
+                            <field name="rg_11_cable_w_mess" invisible="1"/>
+                            <field name="rg_11_cable_w_mess_qty" string="RG-11 CABLE W/ MESS" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 23 -->
+                            <field name="rg_11_connector" invisible="1"/>
+                            <field name="rg_11_connector_qty" string="RG-11 CONNECTOR" readonly="1"/>
+                        </group>
+                        <group>
+                            <!-- DROP 24 -->
+                            <field name="utp_cable_1_meter" invisible="1"/>
+                            <field name="utp_cable_1_meter_qty" string="UTP CABLE 1 meter" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Search -->
+    <record id="stock_drops_issuance_search" model="ir.ui.view">
+        <field name="name">stock.drops.issuance.search</field>
+        <field name="model">stock.drops.issuance</field>
+        <field name="arch" type="xml">
+            <search string="etsi_search">
+                <field name="ref_number" string="Reference Number" filter_domain="[('ref_number','ilike',self)]"/>
+                <field name="import_batch" string="Batch Name" filter_domain="[('import_batch','ilike',self)]"/>
+                <field name="callid" string="Job Order" filter_domain="[('callid','ilike',self)]"/>
+                <field name="employee_name" string="Employee Name" filter_domain="[('employee_name','ilike',self)]"/>
+                <field name="task_type_category" string="Task Type Category" filter_domain="[('task_type_category','ilike',self)]"/>
+                <field name="assigned_engineer" string="Team" filter_domain="[('assigned_engineer','ilike',self)]"/>
+                <field name="date_time" string="Import Date" filter_domain="[('date_time','ilike',self)]"/>
+                <field name="completion_date" string="Completion Date" filter_domain="[('completion_date','ilike',self)]"/>
+                <filter name="filter_type_DRAFT" string="DRAFT" domain="[('stats','=','draft')]"/>
+                <filter name="filter_type_DONE" string="DONE" domain="[('stats','=','done')]"/>
+                <separator/>
+                <group>
+                    <filter name="import_batch" string="Batch" context="{'group_by': 'import_batch'}" />
+                    <filter name="task_type_category" string="Task Type" context="{'group_by': 'task_type_category'}" />
+                    <filter name="assigned_engineer" string="Team" context="{'group_by': 'assigned_engineer'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="drops_issuance_action" model="ir.actions.act_window">
+        <field name="name">Drops Issuance</field>
+        <field name="res_model">stock.drops.issuance</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="drops_menu"
+        name="Drops Issuance"
+        parent="stock.menu_stock_inventory_control"
+        action="drops_issuance_action"
+        sequence="10"/>
+
+    <!-- Tree Form Import-->
+    <record id="stock_drops_import_form" model="ir.ui.view">
+        <field name="name">stock.drops.import.form</field>
+        <field name="model">stock.drops.import</field>
+        <field name="arch" type="xml">
+            <form string="Drops Issuance Import" create="false" edit="false">
+                <sheet>
+                    <group string="Import Information">
+                        <field name="import_batch" readonly="1" />
+                        <field name="import_batch_duplicate" invisible="1" /> 
+                        <field name="data" />
+                        <field name="employee_name" />
+                        <field name="date_time" />
+                    </group>
+
+                    <!-- <group style="border:1px solid red; display:flex; flex-direction:row; justify-content:right;  margin-right:2rem">
+                        <group style="border:1px solid blue; margin:0; padding:0;">
+                            <button name="drop_validate" type="object" string="Test Validate" class="oe_highlight" style="float:right; margin-left:6rem;"/>
+                        </group>
+
+                        <group style="border:1px solid blue; margin-right:2rem">
+                            <button name="drop_validate" type="object" string="Test Validate" class="oe_highlight" style="float:right; margin-left:6rem;"/>
+                        </group>
+
+                    </group> -->
+
+                    <footer>
+                        <button name="run_validate" type="object" string="Validate" class="oe_highlight"/>
+                        <button name="write_success" type="object" string="Save" invisible="1"/> <button string="Cancel" special="cancel" invisible="1"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_drops_import_action" model="ir.actions.act_window">
+        <field name="name">Drops Issuance Import</field>
+        <field name="res_model">stock.drops.import</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <act_window name="Drop_Issuance_Import" id="popup_window_import"
+        res_model="stock.drops.import"
+        view_mode="form" target="new"/>
+
+    <menuitem
+        id="drops_menu_import"
+        name="Drops Issuance Import"
+        parent="stock.menu_stock_inventory_control"
+        action="popup_window_import"
+        sequence="11"/>
+</odoo>

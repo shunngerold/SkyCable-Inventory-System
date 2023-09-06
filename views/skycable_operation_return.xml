@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="inherit_view_id_operation_return" model="ir.ui.view">
+        <field name="name">operation_return.view.form.inherit</field>
+        <field name="model">stock.return.picking</field>
+        <field name="inherit_id" ref="stock.view_stock_return_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[2]" position="attributes">
+                <attribute name="string">Available Returns</attribute>
+            </xpath>
+            <xpath expr="//group[2]" position="after">
+                <group name="serial_return" string="Return Items">
+                    <field name="serial_holder_id" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="product_name" required="True" readonly="1" />
+                            <field name="etsi_serial_product"
+                                attrs="{'readonly': [('product_name','!=',False)]}" />
+                            <field name="etsi_mac_product"
+                                attrs="{'readonly': [('product_name','!=',False)]}" />
+                            <field name="etsi_smart_card"
+                                attrs="{'readonly': [('product_name','!=',False)]}" />
+                            <field name="issued_return" readonly="1" />
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+            <xpath expr="//group[2]/field[@name='product_return_moves']//tree" position="attributes">
+                <attribute name="edit">0</attribute>
+                <attribute name="delete">0</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- Team Return -->
+    <record id="operation_team_return_form" model="ir.ui.view">
+        <field name="name">operation.team.return.view.form</field>
+        <field name="model">stock.picking.return.list.holder</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Return List">
+                        <field name="return_list_move_holder" nolabel="1" readonly="1">
+                            <tree editable="bottom" delete="0" create="0">
+                                <field name="product_id" />
+                                <field name="etsi_serial_product" />
+                                <field name="etsi_mac_product" />
+                                <field name="etsi_smart_card" />
+                                <field name="issued" />
+                                <field name="quantity" />
+                                <field name="product_uom" />
+                                <field name="active_ako" invisible="1" />
+                                <field name="active_name" invisible="1" />
+                                <field name="teams" />
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Damage List">
+                        <field name="damage_list_ids" nolabel="1" readonly="1">
+                            <tree editable="bottom" delete="0" create="0">
+                                <field name="product_id" />
+                                <field name="etsi_serial_product" />
+                                <field name="etsi_mac_product" />
+                                <field name="etsi_smart_card" />
+                                <field name="issued" />
+                                <field name="dmg_type" />
+                                <field name="quantity" />
+                                <field name="product_uom" />
+                                <field name="teams_from_damage" invisible="1" />
+                                <field name="active_name" invisible="1" />
+                                <field name="teams" />
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Transfer List">
+                        <field name="transfer_list_ids" nolabel="1" readonly="1">
+                            <tree editable="bottom" delete="0" create="0">
+                                <field name="product_id" />
+                                <field name="etsi_serial_product" />
+                                <field name="etsi_mac_product" />
+                                <field name="etsi_smart_card" />
+                                <field name="issued" />
+                                <field name="quantity" />
+                                <field name="product_uom" />
+                                <field name="teams_from" />
+                                <field name="teams_to" />
+                                <field name="if_two_team" />
+                                <field name="active_ako" invisible="1" />
+                                <field name="active_name" invisible="1" />
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <!-- Return Button -->
+                <footer>
+                    <button name="return_btn" string="Validate" type="object" class="btn-default" />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!-- Operation Return Window -->
+    <record id="return_item_action" model="ir.actions.act_window">
+        <field name="name">Team Return :</field>
+        <field name="res_model">stock.picking.return.list.holder</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="operation_team_return_form"></field>
+        <field name="target">new</field>
+    </record>
+    <record id="view_return_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.return.view.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <!-- Add One2many Field for return page -->
+            <xpath expr="//notebook/page[2]" position="after">
+                <page string="Team Return"
+                    attrs="{'invisible': ['|',('teller','!=','return'),('etsi_teams_id','=',False)]}">
+                    <group name="name_group">
+                        <field name="return_list" string="Return List" nolabel="1"
+                            attrs="{'readonly': [('state','=','done')]}">
+                            <tree editable="bottom">
+                                <field name="product_id" readonly="1" required="1" />
+                                <field name="etsi_serial_product" />
+                                <field name="etsi_mac_product" />
+                                <field name="etsi_smart_card" />
+                                <field name="quantity" readonly="1" />
+                                <field name="issued" readonly="1" />
+                                <field name="product_uom" readonly="1" />
+                                <field name="active_ako" invisible="1" />
+                                <field name="return_checker"
+                                    attrs="{'invisible': ['|',('damage_checker', '=', True), ('transfer_checker', '=', True)]}" />
+                                <field name="damage_checker"
+                                    attrs="{'invisible': ['|',('transfer_checker', '=', True), ('return_checker', '=', True)]}" />
+                                <field name="dmg_type"
+                                    attrs="{'invisible': [('damage_checker', '=', False)], 'required': [('damage_checker', '=', True)]}" />
+                                <field name="transfer_checker"
+                                    attrs="{'invisible': ['|',('damage_checker', '=', True), ('return_checker', '=', True)]}" />
+                                <field name="teams_from" readonly="1"
+                                    attrs="{'invisible': [('transfer_checker', '=', False)], 'required': [('transfer_checker', '=', True)]}"
+                                    options="{'no_quick_create': True, 'no_create_edit' : True, 'no_open' : True}" />
+                                <field name="teams_to"
+                                    attrs="{'invisible': [('transfer_checker', '=', False)], 'required': [('transfer_checker', '=', True)]}"
+                                    options="{'no_quick_create': True, 'no_create_edit' : True, 'no_open' : True}" />
+                                <field name="if_two_team" readonly="1" />
+                                <field name="if_two_team_duplicate" invisible="1" />
+                                <field name="teams_from_damage" invisible="1" />
+                                <field name="teams_from_duplicate" invisible="1" />
+                                <field name="teams" invisible="1" />
+                                <field name="product_id_duplicate" invisible="1" />
+                                <field name="product_uom_duplicate" invisible="1" />
+                                <field name="issued_duplicate" invisible="1" />
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+            <!-- Add the returned items page -->
+            <xpath expr="//notebook/page[3]" position="after">
+                <page string="Returned Items"
+                    attrs="{'invisible': ['|', ('teller','!=','return'), ('status_field','=','draft')]}">
+                    <field name="return_items" readonly="1" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="product_id" readonly="1" required="1" />
+                            <field name="etsi_serial_product" />
+                            <field name="etsi_mac_product" />
+                            <field name="etsi_smart_card" />
+                            <field name="quantity" />
+                            <field name="product_uom" />
+                            <field name="issued" />
+                            <field name="teams" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <!-- Add the returned items page -->
+            <xpath expr="//notebook/page[4]" position="after">
+                <page string="Damaged Items" attrs="{'invisible': ['|', ('teller','!=','damage')]}">
+                    <field name="damaged_items" readonly="1" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="product_id" readonly="1" required="1" />
+                            <field name="etsi_serial_product" />
+                            <field name="etsi_mac_product" />
+                            <field name="etsi_smart_card" />
+                            <field name="quantity" />
+                            <field name="product_uom" />
+                            <field name="issued" />
+                            <field name="dmg_type" />
+                            <field name="teams_from_damage" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <!-- Replace the validate button -->
+            <xpath expr="//header/button[5]" position="replace">
+                <button name="do_new_transfer" states="draft,partially_available,assigned"
+                    string="Validate"
+                    attrs="{'invisible': ['|', ('teller','in',('return','pull-out','pull-out-return'))]}"
+                    groups="stock.group_stock_user" type="object" class="oe_highlight" />
+            </xpath>
+            <!-- Add the return button -->
+            <xpath expr="//header/button[8]" position="replace">
+                <button name="%(return_item_action)d" string="Return" state="draft" type="action"
+                    class="oe_highlight" groups="base.group_user"
+                    attrs="{'invisible': ['|', ('teller','!=','return'), ('state','=','done')]}" />
+            </xpath>
+            <!-- Add the field teller -->
+            <xpath expr="//sheet/group/group[1]/field[1]" position="after">
+                <field name="teller" invisible="1" />
+            </xpath>
+            <!-- Add the Source Document Field for batch return -->
+            <xpath expr="//sheet/group/group[2]/field[@name='min_date']" position="after">
+                <field name="source"
+                    attrs="{'readonly': [('state','=','done')], 'invisible': [('teller','!=','return')]}" />
+            </xpath>
+            <!-- Hide the origin button -->
+            <xpath expr="//sheet/group/group[2]/field[@name='origin']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- Hiding the initial demand page if team return -->
+            <xpath expr="//notebook/page[2]" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('teller', '=', 'return')]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

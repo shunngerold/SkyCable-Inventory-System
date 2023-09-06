@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <template id="external_layout_barcode_right" inherit_id="report.external_layout" primary="True">
+            <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+                <attribute name="t-call">stock.external_layout_header_barcode_right</attribute>
+            </xpath>
+        </template>
+
+        <template id="external_layout_header_barcode_right" inherit_id="report.external_layout_header" primary="True">
+            <xpath expr="//div[@name='company_address']" position="after">
+                <div class="col-xs-4 pull-right mt8" name="right_box">
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:50px;"/>
+                    <p>  <span t-field="o.name"/></p>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="pull_out_delivery_form_preview">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="stock.external_layout_barcode_right">
+                    <link rel="stylesheet" href="/skycable_employee_inventory/static/src/style.css"/>
+                        <div class="page">
+                            <h1 class="text-center">Pull-Out Delivery Report</h1>
+                          
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                         
+                        
+
+
+
+                            <table class="table table-condensed"  style=" border: 1px solid;  width: 100%; table-layout: auto;">
+                             
+                                    
+                            
+                                <thead  style=" border: 1px solid; "  >
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>J.O.</strong></th> 
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>SERIAL ID</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>MAC ID</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>SMART CARD</strong></th>
+                                        <!-- <th style=" border: 1px solid;  text-align: center;"><strong>TEAM NUMBER</strong></th> -->
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>DATE</strong></th>
+                                        <!-- <th style=" border: 1px solid;  text-align: center;"><strong>QTY</strong></th> -->
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>EMPLOYEE</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>DAMAGED</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>DESCRIPTION</strong></th>
+                                </thead>
+
+                                
+                                <tbody  style=" border: 1px solid; ">
+                                    
+                                   
+                                    
+                                    
+                                        <tr style=" border: 1px solid; " t-foreach='o.pullout_holder_return' t-as='line' >
+
+                                            <t t-if="line.for_delivery == True" >
+
+                                         
+                                                    
+                                                <td style=" border: 1px solid;  text-align: center; "> 
+                                                    <span t-field="line.job_number_related" />  
+                                                </td>
+
+                                                <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.etsi_serial_product" />
+                                                </td>
+
+                                                <td style=" border: 1px solid;  text-align: center; ">
+                                                    <span t-field="line.etsi_mac_product" />
+                                                </td>
+
+                                                <td style=" border: 1px solid;  text-align: center; ">
+                                                    <span t-field="line.etsi_smart_card" />
+                                                </td>
+
+                                                <!-- <td style=" border: 1px solid;  text-align: center; ">
+                                                    <span t-field="line.etsi_teams_id" />
+                                                </td> -->
+
+                                                <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.comp_date" />
+                                                </td>
+                                                
+                                                <!-- <td style=" border: 1px solid;  text-align: center; ">
+                                                    <span > 1 </span>  
+                                                </td> -->
+    
+                                                <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.employee_number" />
+                                                </td>
+
+                                                <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.is_damaged" />
+                                                </td>
+
+                                                <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.description" />
+                                                </td>
+
+                                                
+                                                
+                                            </t>
+                                    
+                                        
+                                            
+                                     
+                                            
+                                        </tr>
+                                    
+                                </tbody>
+                            </table>
+
+                               <br/> <br/>
+                            <br/> <br/>
+                            <!-- <h5 >ENCODE BY:  <span t-esc="request.env.user.name"/> </h5> -->
+                            <t t-foreach="request.env['hr.employee'].search([])" t-as="obj">
+                                <t t-if="int(obj.job_id) == 3593">
+                                <h5 class="text-left" >WAREHOUSE IN-CHARGE:_________________ 
+                                <!-- <span t-esc="obj.name"/>  -->
+                                </h5>
+                                </t>
+                                </t>
+                           
+                            <h5 >SIGNATURE:_________________</h5>
+
+                             <!-- <br/> <br/>
+                            <br/> <br/>
+                            <h5 >ENCODE BY:  <span t-esc="request.env.user.name"/> </h5>
+                            <h5 >SIGNATURE:_________________</h5>
+                            <h5 style="padding-left: 100px;"><span t-esc="o.etsi_teams_member_name.name"/> </h5>
+                         -->
+                            
+                            <p t-field="o.note"/>
+                            
+                            <div class="col-xs-5" style=" position: absolute; top: 90px; right: 1px; margin-bottom: 20px; ">
+                               
+                                <p><strong>Employee for delivery:</strong>    <span t-field="o.employee_for_delivery"/></p>
+                                <p><strong>Date Returned: </strong>    <span t-field="o.date_delivered"/></p>
+                                <p><strong>Received By: </strong>    <span t-field="o.received_by"/></p>
+                                <p><strong>Total Quantity: </strong>    <span t-field="o.pullout_return_quantity"/></p>
+                            
+
+                            </div> 
+                            <br></br>
+
+                            <br></br>
+                      
+
+                            
+                            <div class="col-xs-5" style=" position: absolute; top: 90px; left: 1px; ">
+                                <p><strong>Encode By:</strong>    <span t-esc="request.env.user.name"/></p>
+                                <p><strong>Source Location:</strong>    <span t-field="o.location_id"/></p>
+                                <p><strong>Destination Location:</strong>    <span t-field="o.location_dest_id"/></p>
+                                <!-- <p><strong>Release Date:</strong>  <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m/%d/%y %H:%M:%S')"/></p> -->
+                                <!-- <p><strong>Scheduled Date:</strong>    <span t-field="o.min_date"/></p> -->
+                                <p><strong> Transaction Number:</strong><spant t-field="o.name"/></p>
+                             </div>
+                        </div>
+
+                    </t>
+                 </t>
+             </t>
+        </template>
+    </data>
+</odoo>

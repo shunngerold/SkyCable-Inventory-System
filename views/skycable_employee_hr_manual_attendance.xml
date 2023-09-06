@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Hide HR Settings Manual Attendance in Status Group -->
+        <record id="hr_inherit_manual_attendance" model="ir.ui.view">
+            <field name="name">hr.inherit.timesheets</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='manual_attendance']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- Hide HR Settings Manual Attendance in Status Group -->
+    </data>
+</odoo>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <template id="drop_issuance_report">
+            <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+            <link rel="stylesheet" href="/team-configuration/static/src/css/style.css"/>
+                <div class="page">
+                    
+                    <h1 class="text-center">Drop Issuance Report</h1>
+                            <br/>
+
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                        <table class="table table-condensed"  style=" border: 1px solid; page-break-inside: avoid;">
+                        <thead  style=" border: 1px solid; ">
+                                <th style=" border: 1px solid;"><strong>Job Order</strong></th>
+                                <th style=" border: 1px solid;"><strong>Import Batch Name</strong></th>
+                                <th style=" border: 1px solid;"><strong>Employee Name</strong></th>
+                                <th style=" border: 1px solid;"><strong>Date Imported</strong></th>
+                                <th style=" border: 1px solid;"><strong>Available Drops</strong></th>
+                                <th style=" border: 1px solid;"><strong>Task Type Category</strong></th>
+                                <!-- <th style=" border: 1px solid;"><strong>Teams</strong></th> -->
+                                <th style=" border: 1px solid;"><strong>Completion Date</strong></th>
+                                <th style=" border: 1px solid;"><strong>Status</strong></th>
+                                
+                        </thead>
+
+                        <tbody  style=" border: 1px solid; ">
+                            <t t-foreach="table1" t-as="rec">
+                                <tr style=" border: 1px solid;">
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['callid']"/>
+                                    </td >
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['import_batch']"/>
+                                    </td>
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['employee_name']"/>
+                                    </td>  
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['date_time']"/>
+                                    </td>
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['counter_drops']"/>
+                                    </td>
+                                    
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['task_type_category']"/>
+                                    </td>
+                                    
+                                    <!-- <td style=" border: 1px solid;">
+                                        <t t-esc="rec['assigned_engineer']"/>
+                                    </td> -->
+
+
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['completion_date']"/>
+                                    </td>
+
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['stats']"/>
+                                    </td>
+                                    
+                                    
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br/> <br/>
+                    <br/> <br/>
+                    <div style=" page-break-inside: avoid;">
+                        <!-- <h5 class="text-left">ENCODE BY: <span t-esc="request.env.user.name"/></h5> -->
+                        <h5 class="text-left">SIGNATURE: ______________________</h5>
+                    </div>
+                    <div class="col-xs-5" style=" position: absolute; top: 90px; left: 1px; ">
+                        
+                        <p><strong>Date:</strong>  <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/></p>
+                        <p><strong>Encode By:</strong>  <span t-esc="request.env.user.name"/></p>
+                        
+                    </div>
+                    
+                </div>
+              </t>  
+            </t>
+        </template>
+    </data>
+</odoo>

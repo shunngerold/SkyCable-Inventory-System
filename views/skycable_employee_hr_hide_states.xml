@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Pag hide ng mga states -->
+    <record id="etsi_status_inherit" model="ir.ui.view">
+        <field name="name">etsi.status.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="etsi_hrms.etsi_hr_employee_form_view" />
+        <field name="arch" type="xml">
+            <field name="state" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

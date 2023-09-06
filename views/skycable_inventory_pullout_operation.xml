@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pullout_inherit" model="ir.ui.view">
+        <field name="name">stock.pullout.view.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <!-- Hide the force availability button -->
+            <xpath expr="//header/button[@name='force_assign']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- Hide the reserve button -->
+            <xpath expr="//header/button[@name='action_assign']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- Hide the unreserve button -->
+            <xpath expr="//header/button[@name='do_unreserve']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- Hide the service date -->
+            <xpath expr="//field[@name='min_date']" position="attributes">
+                <attribute name="attrs">{'invisible' : [('teller', 'in',
+                    ('pul-out','pull-out-return'))]}</attribute>
+            </xpath>
+            <!-- Pull out delivery form  -->
+            <xpath expr="//form/sheet" position="before">
+                <!-- Change the color to green -->
+                <div class="container" role="alert" style="margin-bottom:0px"
+                    attrs="{'invisible' : ['|', ('teller','!=', 'pull-out-return'),  ('status_field','!=', 'waiting')]}">
+                    Note: The form will be completed once the delivery team confirms the return of
+                    pull-outs to Sky Cable. Please provide the fields
+                    Employee for Delivery, Date returned and the received by fields when the
+                    delivery team returns.
+                </div>
+            </xpath>
+            <!-- Add additional fields when items are received by Sky -->
+            <xpath expr="//sheet/group/group[2]/field[@name='min_date']" position="after">
+                <field name="status_field" invisible="1" />
+                <field name="employee_for_delivery"
+                    attrs="{'readonly': [('status_field','in',('done'))], 'invisible': [('teller','!=', 'pull-out-return')]}" />
+                <field name="date_delivered"
+                    attrs="{'readonly': [('status_field','!=','waiting')], 'invisible': [('teller','!=', 'pull-out-return')]}" />
+                <field name="received_by"
+                    attrs="{'readonly': [('status_field','!=','waiting')], 'invisible': [('teller','!=', 'pull-out-return')]}" />
+                <!-- Onchange Count for pull outs  -->
+                <field name="etsi_pullout_count" readonly="1"
+                    attrs="{'invisible': [('teller',  'not in', ('pull-out-return', 'pull-out') )]}" />
+                <field name="etsi_pullout_count_temp" invisible="1" />
+                <field name="etsi_pullout_count_temp_related"
+                    attrs="{'invisible': [('teller',  'not in', ('pull-out') )] }" />
+                <field name="pullout_return_quantity" invisible="1" />
+                <field name="pullout_return_quantity_related"
+                    attrs="{'invisible': ['|', ('teller',  'not in', ('pull-out-return') ), ('status_field',  '!=', ('draft') )]} " />
+                <field name="pullout_returned_quantity" readonly="1"
+                    attrs="{'invisible': ['|', ('teller',  'not in', ('pull-out-return') ), ('status_field',  '!=', ('done') )]} " />
+                <field name="line_counter"
+                    attrs="{'invisible': ['|', ('teller',  'not in', ('pull-out-return')), ('state','=','done') ], 'readonly' : [('status_field',  'in', ('waiting','done'))]}" />
+            </xpath>
+            <!-- Add Button to confirm pullout -->
+            <xpath expr="//header/button[@name='action_cancel']" position="before">
+                <button name="receive_pullout_btn" string="Confirm Receive" type="object"
+                    class="oe_highlight"
+                    attrs=" { 'invisible': ['|',('state', '=', 'done'),('teller', '!=', 'pull-out')]}" />
+            </xpath>
+            <xpath expr="//header/button[@name='action_cancel']" position="before">
+                <button name="receive_delivery_btn" string="Process Delivery" type="object"
+                    class="oe_highlight"
+                    attrs=" { 'invisible': ['|','|',('state', '=', 'done'), ('status_field', '=', 'waiting'),('teller', '!=', 'pull-out-return') ]}" />
+                <button name="confirm_delivery_btn" string="Confirm Delivery" type="object"
+                    class="oe_highlight"
+                    attrs=" { 'invisible': ['|','|', ('status_field', '!=', 'waiting'),('state', '=', 'done'), ('teller', '!=', 'pull-out-return')]}" />
+            </xpath>
+            <!-- Add One2many Field for pull out receive page -->
+            <xpath expr="//notebook/page[2]" position="after">
+                <page string="Pullouts Received" attrs="{'invisible': [('teller','!=','pull-out')]}"
+                    required="1">
+                    <group name="pullout_receive_page">
+                        <field name="pullout_holder" string="Pull Out Form" nolabel="1"
+                            attrs="{'readonly': ['|',('state','=','done'), ('status_field', '=', 'done' )], 'invisible': [('teller','!=','pull-out')]}">
+                            <tree editable="bottom">
+                                <field name="job_number" />
+                                <field name="product_id" invisible="1" />
+                                <field name="quantity" invisible="1" />
+                                <field name="serial_type" required="1" />
+                                <field name="etsi_serial_product"
+                                    attrs=" {'required': [('serial_type','=','catv')]}" />
+                                <field name="etsi_mac_product"
+                                    attrs=" {'invisible': [('serial_type','=','catv')], 'required': [('serial_type','=','modem')]}" />
+                                <field name="etsi_smart_card"
+                                    attrs=" {'invisible': [('serial_type','=','modem')]}" />
+                                <field name="comp_date" />
+                                <field name="employee_number" />
+                                <field name="is_damaged" invisible="1" />
+                                <field name="description" />
+                                <!-- <field name="etsi_teams_id"/> -->
+                                <field name="issued" readonly="1" invisible="1" />
+                                <field name="product_uom" readonly="1" invisible="1" />
+                                <field name="product_uom_qty" readonly="1" invisible="1" />
+                                <field name="active_name" invisible="1" />
+                                <field name="active_ako" invisible="1" />
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+            <!-- Pull Out Return to Sky  -->
+            <xpath expr="//notebook/page[3]" position="after">
+                <page string="Pullouts Return"
+                    attrs="{'invisible': ['|', ('teller','!=','pull-out-return'), ('status_field','!=','draft')], 'readonly': [('status_field','!=','draft')]}">
+                    <group name="name_group">
+                        <field name="pullout_holder_return" string="Pull Out Return Form"
+                            nolabel="1"
+                            attrs="{'readonly': ['|', ('state','=','done'), ('status_field','!=','draft')], 'invisible': ['|', ('teller','!=','pull-out-return'),('status_field','!=','draft')]}">
+                            <tree editable="bottom" delete="0" create="0">
+                                <field name="for_delivery" />
+                                <field name="job_number" invisible="1" />
+                                <field name="job_number_related" readonly="1" />
+                                <field name="product_id" invisible="1" />
+                                <field name="product_id_related" readonly="1" invisible="1" />
+                                <field name="quantity" invisible="1" />
+                                <field name="etsi_serial_product" readonly="1" />
+                                <field name="etsi_mac_product" readonly="1" />
+                                <field name="etsi_smart_card" readonly="1" />
+                                <field name="comp_date" />
+                                <field name="etsi_teams_id" invisible="1" />
+                                <field name="issued" readonly="1" />
+                                <field name="product_uom" invisible="1" />
+                                <field name="product_uom_qty" invisible="1" />
+                                <field name="active_name" invisible="1" />
+                                <field name="active_ako" invisible="1" />
+                                <field name="employee_number" />
+                                <field name="is_damaged" readonly="1" />
+                                <field name="description" />
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+            <!-- Returned Items For  Pull-outs  -->
+            <xpath expr="//notebook/page[4]" position="after">
+                <page string="Pullouts Return List"
+                    attrs="{'invisible': ['|', ('teller','!=','pull-out-return'), ('status_field','=','draft')]}">
+                    <group name="pull-out_return_group">
+                        <field name="pullout_return_list" delete="0" create="0"
+                            string="Pull Out Return List" nolabel="1"
+                            attrs="{'readonly': [('state','=','done')], 'invisible': [('teller','!=','pull-out-return')]}">
+                            <tree editable="bottom">
+                                <field name="for_delivery" />
+                                <field name="job_number" invisible="1" />
+                                <field name="job_number_related" readonly="1" />
+                                <field name="product_id" invisible="1" />
+                                <field name="quantity" invisible="1" />
+                                <field name="etsi_serial_product" readonly="1" />
+                                <field name="etsi_mac_product" readonly="1" />
+                                <field name="etsi_smart_card" readonly="1" />
+                                <field name="comp_date" />
+                                <field name="issued" readonly="1" invisible="1" />
+                                <field name="product_uom" invisible="1" />
+                                <field name="product_uom_qty" invisible="1" />
+                                <field name="active_name" invisible="1" />
+                                <field name="active_ako" invisible="1" />
+                                <field name="employee_number" />
+                                <field name="is_damaged" />
+                                <field name="description" />
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- For Menu of Pull Outs -->
+    <record id="view_all_serial_for_pullouts_action" model="ir.actions.act_window">
+        <field name="name">View All Pullouts</field>
+        <field name="res_model">etsi.pull_out.inventory</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem
+        id="view_all_pullouts_menu"
+        name="View All Pull Outs"
+        web_icon="skycable_employee_inventory,static/img/view_all_pullouts_icon.png"
+        action="view_all_serial_for_pullouts_action"
+        sequence="" />
+
+    <menuitem
+        name="Data Entry"
+        action="stock.action_inventory_form"
+        id="menu_action_inventory_form"
+        parent="stock.menu_stock_inventory_control"
+        sequence="30" />
+    <record model="ir.ui.view" id="pull_outs_tree_view">
+        <field name="name">pull.outs.tree.view</field>
+        <field name="model">etsi.pull_out.inventory</field>
+        <field name="arch" type="xml">
+            <tree string="Pull Outs" create="false" delete="false" edit="false">
+                <field name="job_number" />
+                <field name="serial_type" />
+                <field name="description" />
+                <field name="etsi_serial" />
+                <field name="etsi_mac" />
+                <field name="etsi_smart_card" />
+                <!-- PULLOUTS ARE RECEIVED -->
+                <field name="etsi_receive_date_in" />
+                <!-- PULL OUTS FOR DELIVERY  -->
+                <field name="etsi_date_issued_in" />
+                <!-- PULL OUTS RETURNED TO SKY  -->
+                <field name="etsi_date_returned_in" />
+                <!-- <field name="etsi_teams_id" /> -->
+                <field name="employee_number" />
+                <field name="etsi_status" />
+                <field name="transaction_number" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Filter for View All Pullouts -->
+    <record id="search_view_pull_outs" model="ir.ui.view">
+        <field name="name">search.view.pull.out</field>
+        <field name="model">etsi.pull_out.inventory</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- Received Pull Outs -->
+                <filter string="RECEIVED" name="received" domain="[('etsi_status','=','received')]" />
+                <!-- For Delivery Pull Outs -->
+                <filter string="DELIVERY" name="delivery" domain="[('etsi_status','=','delivery')]" />
+                <!-- Returned Pull Outs -->
+                <filter string="RETURNED" name="returned" domain="[('etsi_status','=','returned')]" />
+                <!-- Normal Pull Outs -->
+                <filter string="Normal Pull-Outs" name="normal" domain="[('is_damaged','=', False)]" />
+                <!-- Damaged Pull Outs -->
+                <filter string="Damaged Pull-Outs" name="damaged"
+                    domain="[('is_damaged','=', True)]" />
+                <!-- CATV -->
+                <filter string="CATV" name="catv" domain="[('serial_type','=', 'catv')]" />
+                <!-- Modem -->
+                <filter string="BROADBAND" name="modem" domain="[('serial_type','=', 'modem')]" />
+            </search>
+        </field>
+    </record>
+</odoo>

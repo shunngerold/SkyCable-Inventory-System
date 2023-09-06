@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Hide the Bank Account ID  -->
+    <record id="etsi_bank_account_wsi_custom" model="ir.ui.view">
+        <field name="name">wsi.custom.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="wsi_hrms_custom.hr_hr_employee_view_form2" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bank_account_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

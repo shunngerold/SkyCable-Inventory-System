@@ -1,0 +1,147 @@
+<odoo>
+  <data>
+    <record id="contract_inherited_views" model="ir.ui.view">
+      <field name="name">team3.contact</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//notebook/page[1]" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <page name="sales_purchases" position='attributes'>
+          <attribute name="invisible">1</attribute>
+        </page>
+      </field>
+    </record>
+
+    <record id="team3_inherited_view" model="ir.ui.view">
+      <field name="name">team3.inherited.view</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="etsi_payroll.etsi_payroll_partner_form" />
+      <field name="arch" type="xml">
+
+        <page name="payroll_partner" position='attributes'>
+          <attribute name="invisible">1</attribute>
+        </page>
+
+        <xpath expr="//page[4]" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+      </field>
+    </record>
+
+    <record id="banking_inherit" model="ir.ui.view">
+      <field name="name">banking.view.form.inherit</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="etsi_base.base_partner_form_view" />
+      <field name="arch" type="xml">
+
+        <xpath expr="//page[4]" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+      </field>
+    </record>
+
+    <record id="subscriber" model="ir.ui.view">
+      <field name="name">subscriber.view.form.inherit</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml">
+
+        <field name="category_id" position='after'>
+          <field name="subscriber" />
+        </field>
+
+      </field>
+    </record>
+
+    <!--START::: Here is for invoice -->
+
+    <record id="inherit_view_invoice_smartbtn" model="ir.ui.view">
+      <field name="name">team3.contacts</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="account.partner_view_buttons" />
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='open_partner_history']" position="attributes">
+          <attribute name="attrs">{'invisible': [('customer', '=', True)]}</attribute>
+
+        </xpath>
+      </field>
+    </record>
+
+    <!-- END INVOICE -->
+
+
+    <!-- START:: SALES -->
+
+    <record id="inherit_view_sales_smartbtn" model="ir.ui.view">
+      <field name="name">team3.contacts</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="sale.res_partner_view_buttons" />
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='button_box']/button[7]" position="attributes">
+          <attribute name="attrs">{'invisible': [('customer', '=', True)]}</attribute>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- END:: SALES -->
+
+
+    <!-- START::: TASK -->
+    <record id="inherit_view__task_smartbtn" model="ir.ui.view">
+      <field name="name">team3.contacts</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="project.view_task_partner_info_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='button_box']/button[11]" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- END:: TASK -->
+
+
+    <!-- START:: PUBLISHHH -->
+    <record id="inherit_view_publish_smartbtn" model="ir.ui.view">
+      <field name="name">team3.contacts</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="website_partner.view_partners_form_website" />
+      <field name="arch" type="xml">
+        <xpath expr="//div/button[@name='website_publish_button']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- END: PUBLISHHH -->
+
+    <!-- START MEETING, ACTIVITIES and OPPORTUNITIES-->
+    <record id="inherit_view_crm_smartbtn" model="ir.ui.view">
+      <field name="name">team3.contacts</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="crm.view_partners_form_crm1" />
+      <field name="arch" type="xml">
+
+        <!-- MEETING -->
+        <xpath expr="//div/button[@name='schedule_meeting']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <!-- ACTIVITIES -->
+        <xpath expr="//div[@name='button_box']/button[4]" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <!-- OPPORTUNITY -->
+        <xpath expr="//div[@name='button_box']/button[2]" position="attributes">
+          <attribute name="attrs">{'invisible': [('customer', '=', True)]}</attribute>
+        </xpath>
+      </field>
+    </record>
+    <!-- END MEETING and ACTIVITIES -->
+  </data>
+</odoo>

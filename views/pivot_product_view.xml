@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_product_template_pivot" model="ir.ui.view">
+            <field name="name">product.template.report.pivot</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <pivot string="Product Summary">    
+                    <field name="internal_ref_name" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="product_template_action_product" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,tree,pivot,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{"search_default_consumable": 1, 'default_type': 'product'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to define a new product.
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="product_menu_item"
+            name="Products"
+            sequence="0"
+            web_icon="skycable_employee_inventory,static/img/Product.png"
+            action="product_template_action_product"/>
+    </data>
+</odoo>

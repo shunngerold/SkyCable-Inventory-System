@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <record id="menu_teams" model="website.menu">
+        <field name="name">Teams</field>
+        <field name="url">/teams</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">23</field>
+    </record>
+
+
+    <template id="team_page" name="team_list">
+    <t t-call="website.layout">
+    <div  class="container">
+        <h1 class="text-center">Teams</h1>
+
+        <div style="display:flex; gap: 5px;">
+
+            <t t-foreach="employees" t-as="emp">
+
+                <div>
+                    <h3><t t-esc="emp.team_number"/></h3>
+                </div>
+               
+                <t t-foreach="emp.team_members" t-as="variable">
+                    
+                    <div>
+                        <img style="width:100px;height:100px;" t-att-src="'/web/image/hr.employee/%s/image' % variable.team_members_lines.id" alt=""/>
+                        <p style="text-align: center;"><t t-esc="variable.team_members_lines.name"/></p>
+                    </div>
+                   
+                </t>
+          
+            </t>
+        </div>
+        </div>
+    </t>    
+    </template>
+</data>
+</odoo>

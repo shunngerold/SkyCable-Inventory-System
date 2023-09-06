@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_subscriber_inherit" model="ir.ui.view">
+        <field name="name">stock.subscriber.view.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <!-- Hide the operations page for subscriber issuance -->
+            <xpath expr="//notebook/page[1]" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('state', 'in', ('draft', 'confirmed',
+                    'waiting')),('teller', 'in', ('subscriber', 'pull-out','pull-out-return',
+                    'return', 'damage')) ]}</attribute>
+            </xpath>
+            <!-- Overwrite the location id in subscriber issuance -->
+            <xpath expr="//group/group[1]/field[@name='location_id']" position="replace">
+                <field name="location_id" groups="stock.group_stock_multi_locations" required="1"
+                    readonly="1"
+                    domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]" />
+            </xpath>
+            <!-- Hide subscriber field -->
+            <xpath expr="//group/group[1]/field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- Hiding the teams page if subscriber issuance -->
+            <xpath expr="//notebook/page[2]" position="attributes">
+                <attribute name="attrs">{'invisible': [('teller', 'in',
+                    ('subscriber','pull-out','pull-out-return'))]}</attribute>
+            </xpath>
+            <!-- Add One2many Field for subscriber issuance page -->
+            <xpath expr="//notebook/page[2]" position="after">
+                <page string="CPE Issuance"
+                    attrs="{'invisible': [('teller','!=','subscriber')]}">
+                    <group name="subs_issuance_group">
+                        <field name="subs_issue" string="CPE's Issuance" nolabel="1"
+                            attrs="{'readonly': [('state','=','done')]}">
+                            <tree editable="bottom">
+                                <!-- Form for installed serials -->
+                                <field name="job_number" required="1" />
+                                <field name="comp_date" required="1" />
+                                <field name="form_num" required="1" />
+                                <field name="form_type" required="1" />
+                                <!-- Serial Information -->
+                                <field name="product_id" required="1" invisible="1" />
+                                <field name="product_id_related" readonly="1" />
+                                <field name="quantity" invisible="1" />
+                                <field name="etsi_serial_product" />
+                                <field name="etsi_mac_product" invisible="1" />
+                                <field name="etsi_mac_product_related" readonly="1" />
+                                <field name="etsi_smart_card" invisible="1" />
+                                <field name="etsi_smart_card_related" readonly="1" />
+                                <field name="issued" readonly="1" />
+                                <field name="product_uom" required="1" invisible="1" />
+                                <field name="product_uom_related" invisible="1" readonly="1" />
+                                <field name="product_uom_qty" invisible="1" readonly="1" />
+                                <field name="active_name" invisible="1" />
+                                <field name="active_ako" invisible="1" />
+                                <field name="team" readonly="1" />
+                                <field name="teams_to" invisible="1" />
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+                <!-- One2many for the drops issuance  -->
+                <page string="Drops Issuance" attrs="{'invisible': [('teller','!=','subscriber')]}">
+                    <group name="drops_group">
+                        <field name="drops_issue" string="Drops Issuance" nolabel="1" readonly="1"
+                            attrs="{'readonly': [('state','=','done')]}">
+                            <tree editable="bottom">
+                                <field name="job_number" />
+                                <field name="product_id" />
+                                <field name="product_description" />
+                                <field name="product_clicksolf_code" />
+                                <field name="product_uom" />
+                                <field name="clicksolf_quantity" />
+                                <field name="clicksolf_team" />
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="subscriber_issuance_form" model="ir.ui.view">
+        <field name="name">operation.team.issuance.view.form</field>
+        <field name="model">subscriber_issuance_child</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Subscriber List">
+                        <!-- Form for installed serials -->
+                        <field name="job_number" required="1" />
+                        <field name="comp_date" required="1" />
+                        <field name="form_num" required="1" />
+                        <field name="form_type" required="1" />
+                        <!-- Serial Information -->
+                        <field name="product_id" required="1" invisible="1" />
+                        <field name="product_id_related" readonly="1" />
+                        <field name="quantity" invisible="1" />
+                        <field name="etsi_serial_product" />
+                        <field name="etsi_mac_product" invisible="1" />
+                        <field name="etsi_mac_product_related" readonly="1" />
+                        <field name="etsi_smart_card" invisible="1" />
+                        <field name="etsi_smart_card_related" readonly="1" />
+                        <field name="issued" readonly="1" />
+                        <field name="product_uom" required="1" invisible="1" />
+                        <field name="product_uom_related" invisible="1" readonly="1" />
+                        <field name="product_uom_qty" invisible="1" readonly="1" />
+                        <field name="active_name" invisible="1" />
+                        <field name="active_ako" invisible="1" />
+                        <field name="team" readonly="1" />
+                        <field name="teams_to" invisible="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="subscriber_issuance_action" model="ir.actions.act_window">
+        <field name="name">Subscriber Issuance</field>
+        <field name="res_model">subscriber_issuance_child</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="subscriber_issuance_form" />
+        <field name="target">new</field>
+    </record>
+    <!-- Initial Demand -->
+    <record id="view_picking_form_table_inherit_subscriber" model="ir.ui.view">
+        <field name="name">stock.picking.table.inherit.subscriber </field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[2]/field[@name='move_lines']" position="attributes">
+                <attribute name="attrs">{'readonly': [('teller', 'in', ('subscriber',
+                    'return','damage'))], 'readonly': [('state', 'in', ('cancel','done'))]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- PRODUCT.PRODUCT HIDING SMARTBUTTONS *** PROCURMENT *** -->
+        <record id="inherit_views_product_product__procurement_smartbutton" model="ir.ui.view">
+            <field name="name">product.product.procurement.smartbutton.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="procurement.product_product_view_form_procurement_button" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']/button[8]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- PRODUCT.PRODUCT HIDING SMARTBUTTONS *** SALES *** -->
+        <record id="inherit_views_product_product__sales_smartbutton" model="ir.ui.view">
+            <field name="name">product.product.sales.smartbutton.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="sale.product_form_view_sale_order_button" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']/button[9]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- PRODUCT.PRODUCT HIDING SMARTBUTTONS ******** RE-ORDERING ****** -->
+        <record id="inherit_views_product_product__reordering_smartbutton" model="ir.ui.view">
+            <field name="name">product.product.reordering.smartbutton.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.product_form_view_procurement_button" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']/button[5]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- PRODUCT.PRODUCT. HIDING FIELDS ************ barcode *************** -->
+        <record id="inherit_view_product_product_barcode" model="ir.ui.view">
+            <field name="name">product.product.barcode</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- PRODUCT.PRODUCT. HIDING FIELDS ************ barcode *************** -->
+        <record id="inherit_view_product_product_procurements_request" model="ir.ui.view">
+            <field name="name">product.product.procurement.request</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="procurement.product_product_view_form_procurement_button" />
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit_view_product_product_checkboxes" model="ir.ui.view">
+            <field name="name">product.product.checkboxes</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <field name="sale_ok" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <label for="sale_ok" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </label>
+                <field name="purchase_ok" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <label for="purchase_ok" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </label>
+                <field name="can_be_expensed" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <label for="can_be_expensed" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </label>
+            </field>
+        </record>
+    </data>
+</odoo>

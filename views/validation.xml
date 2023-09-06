@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="tmp_user_form_invalid" name="invalid email">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                       Email is already used.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+
+</odoo>

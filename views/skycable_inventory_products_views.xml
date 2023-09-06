@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Remove barcode products -->
+        <record id="product_template_product_form" model="ir.ui.view">
+            <field name="name">product_template_product_form_barcode</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- Inventory Control/ Product -->
+        <!-- hide procurement button -->
+        <record id="product_template_form_view_procurement_button_inherit" model="ir.ui.view">
+            <field name="name">product.template.form.view.procurement.button.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[2]" position="after">
+                    <button name="testing121212" string="Convert" type="object"
+                        attrs="{'invisible': [('internal_ref_name', '!=', 'drops')]}" />
+                </xpath>
+            </field>
+        </record>
+        <!-- hide smart buttons -->
+        <record id="product_template_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.template.view.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view" />
+            <field name="arch" type="xml">
+                <!-- hide reordeing smart button    -->
+                <xpath expr="//button[@name='action_view_orderpoints']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- hide sales smart button -->
+                <xpath expr="//button[@name='action_view_sales']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+        <!-- hide purchase smart button -->
+        <record id="view_product_template_purchase_buttons_from_inherit" model="ir.ui.view">
+            <field name="name">view.product.template.purchase.buttons.from.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="purchase.view_product_template_purchase_buttons_from" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']/button[10]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- hide procurement smart button -->
+        <record id="product_template_view_form_procurement_button_inherit" model="ir.ui.view">
+            <field name="name">product.template.view.form.procurement.button.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="procurement.product_template_view_form_procurement_button" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']/button[9]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- hide can be sold, can be purchased, can be expensed -->
+        <record id="product_template_only_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.template.only.form_view.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view" />
+            <field name="arch" type="xml">
+                <field name="sale_ok" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <label for="sale_ok" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </label>
+                <field name="purchase_ok" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <label for="purchase_ok" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </label>
+                <field name="can_be_expensed" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <label for="can_be_expensed" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </label>
+            </field>
+        </record>
+        <!-- hide sales notetab invoice page -->
+        <record id="product_template_form_view_inherit_2" model="ir.ui.view">
+            <field name="name">product.template.form.view.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="arch" type="xml">
+                <page name="sales" position='attributes'>
+                    <attribute name="invisible">1</attribute>
+                </page>
+                <page name="notes" position='attributes'>
+                    <attribute name="invisible">1</attribute>
+                </page>
+                <page name="invoicing" position='attributes'>
+                    <attribute name="invisible">1</attribute>
+                </page>
+            </field>
+        </record>
+        <!-- hide inventory page -->
+        <record id="view_template_property_form_inherit" model="ir.ui.view">
+            <field name="name">view.template.property.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.view_template_property_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- hide cost prices bills -->
+        <record id="product_template_form_view_inherit_3" model="ir.ui.view">
+            <field name="name">product.template.view.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view" />
+            <field name="arch" type="xml">
+                <field name="list_price" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="standard_price" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+        <!-- hide control bills -->
+        <record id="view_product_supplier_inherit_inherit" model="ir.ui.view">
+            <field name="name">view_.product.supplier.inherit.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="purchase.view_product_supplier_inherit" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='group_standard_price']/field[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group[@name='group_standard_price']/label" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group[@name='group_standard_price']/div" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='group_standard_price']/field[7]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='group_standard_price']/field[8]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group[@name='group_standard_price']/field[6]" position="attributes">
+                    <attribute name="attrs">{'invisible' : ['|',('internal_ref_name', '=',
+                        'catv5'),('internal_ref_name', '=', 'broadband')]}</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- add new field description after internal category -->
+        <record id="product_template_form_view_inherit_3" model="ir.ui.view">
+            <field name="name">product.template.form.view.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[1]/group/group[1]/field[1]" position="attributes">
+                    <attribute name="string">Type</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[1]/group/group[1]/field[@name='categ_id']"
+                    position="after">
+                    <field name="internal_ref_name" string="Product Type" />
+                </xpath>
+                <xpath expr="//notebook/page[1]/group/group[1]/field[3]" position="after">
+                    <field name="description_txt" />
+                </xpath>
+                <xpath expr="//notebook/page[1]/group/group[2]/field[4]" position="after">
+                    <field name="clicksolf_code"
+                        attrs="{'invisible' : ['|',('internal_ref_name', '=', 'catv5'),('internal_ref_name', '=', 'broadband')]}" />
+                </xpath>
+                <!-- ADDING DROPS REFERENCE, NAILS, -->
+                <xpath expr="//notebook/page[1]/group/group[2]/field[4]" position="after">
+                    <field name="drops_reference_id" string="Drops Category Code" invisible="1" />
+                </xpath>
+            </field>
+        </record>
+        <!-- add new field description after internal category -->
+        <record id="product_template_only_form_view_inherit_2" model="ir.ui.view">
+            <field name="name">product.template.form.view.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[1]/group/group[1]/field[@name='default_code']"
+                    position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- smart button content -->
+        <record model="ir.ui.view" id="serials_tree_view_two">
+            <field name="name">serials.tree</field>
+            <field name="model">etsi.inventory</field>
+            <field name="arch" type="xml">
+                <tree string="Serial Tree" create="false" delete="false">
+                    <field name="type_checker" />
+                    <field name="etsi_product_id" />
+                    <field name="etsi_product_name" invisible='True' />
+                    <field name="etsi_description" />
+                    <field name="etsi_serial" />
+                    <field name="etsi_smart_card" />
+                    <field name="etsi_product_quantity" />
+                    <field name="etsi_product_uom" />
+                    <field name="etsi_employee_in" string="Employee" />
+                    <!-- ADDING NEW FIELDS -->
+                    <field name="etsi_punched_date_in" />
+                    <!-- <field name="etsi_subscriber_in" /> -->
+                    <field name="etsi_receive_date_in" />
+                    <field name="etsi_date_issued_in" />
+                    <field name="etsi_date_returned_in" />
+                    <field name="etsi_team_in" />
+                    <field name="etsi_status" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="etsi_inventory_form_02" model="ir.ui.view">
+            <field name="name">serials.form.two</field>
+            <field name="model">etsi.inventory</field>
+            <field name="arch" type="xml">
+                <form create="false" delete="false" edit="false">
+                    <sheet>
+                        <group string="Product Information">
+                            <group>
+                                <field name="type_checker" />
+                                <field name="etsi_product_id" />
+                                <field name="etsi_description" />
+                                <field name="etsi_product_uom" />
+                            </group>
+                            <group>
+                                <field name="etsi_serial" />
+                                <field name="etsi_mac" />
+                                <field name="etsi_smart_card" />
+                            </group>
+                        </group>
+                        <group string="Other Information">
+                            <group>
+                                <field name="etsi_employee_in" string="Employee" />
+                                <field name="etsi_punched_date_in" />
+                                <field name="etsi_receive_date_in" />
+                            </group>
+                            <group>
+                                <field name="etsi_date_issued_in" />
+                                <field name="etsi_date_returned_in" />
+                                <field name="etsi_team_in" />
+                                <field name="etsi_status" />
+                            </group>
+                        </group>
+
+                        <group string="History">
+                            <field name="etsi_history_lines" nolabel="1">
+                                <tree editable="bottom" create="false" delete="false">
+                                    <field name="etsi_operation" />
+                                    <field name="etsi_transaction_description" />
+                                    <field name="etsi_history_quantity" />
+                                    <field name="etsi_transaction_num" />
+                                    <field name="etsi_employee" />
+                                    <field name="etsi_teams" />
+                                    <field name="etsi_action_date" />
+                                    <field name="etsi_status" />
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_inventory_table_one" model="ir.actions.act_window">
+            <field name="name">CATV5</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">etsi.inventory</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.ui.view" id="serials_tree_view_one">
+            <field name="name">serials.tree</field>
+            <field name="model">etsi.inventory</field>
+            <field name="arch" type="xml">
+                <tree string="Serial Tree" create="false" delete="false">
+                    <field name="type_checker" />
+                    <field name="etsi_product_id" />
+                    <field name="etsi_product_name" invisible='True' />
+                    <field name="etsi_description" />
+                    <field name="etsi_serial" />
+                    <field name="etsi_mac" />
+                    <field name="etsi_product_quantity" />
+                    <field name="etsi_product_uom" />
+                    <field name="etsi_employee_in" string="Employee" />
+                    <!-- ADDING NEW FIELDS -->
+                    <field name="etsi_punched_date_in" />
+                    <!-- <field name="etsi_subscriber_in" /> -->
+                    <field name="etsi_receive_date_in" />
+                    <field name="etsi_date_issued_in" />
+                    <field name="etsi_date_returned_in" />
+                    <field name="etsi_team_in" />
+                    <field name="etsi_status" />
+                </tree>
+            </field>
+        </record>
+        <record id="action_inventory_table_two" model="ir.actions.act_window">
+            <field name="name">BROADBAND</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">etsi.inventory</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="product_template_form_view_procurement_button_serialbutton" model="ir.ui.view">
+            <field name="name">model.name.view.form.inherit.smart</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button" />
+            <field name="arch" type="xml">
+                <xpath expr="//div/button[@name='action_view_stock_moves']" position="after">
+                    <button icon="fa-barcode" class="oe_stat_button" name="serial_location"
+                        string="Serials" type="object"
+                        attrs="{'invisible' : [('internal_ref_name','in',('drops','others'))]}">
+                        <field name="product_count" />
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- hide purchase smart button -->
+        <record id="view_product_template_purchase_buttons_from_inherit_2" model="ir.ui.view">
+            <field name="name">view.product.template.purchase.buttons.from.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="purchase.view_product_template_purchase_buttons_from" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']/button[11]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- ONE2MANY PRODUCT CONFIGURATION: SERIAL, MAC, STATUS -->
+        <record id="inherit_apply_module_name" model="ir.ui.view">
+            <field name="name">stock.view.form.inherit.apply</field>
+            <field name="model">stock.change.product.qty</field>
+            <field name="inherit_id" ref="stock.view_change_product_quantity" />
+            <field name="arch" type="xml">
+                <xpath expr="//group/field[@name='new_quantity']" position="attributes">
+                    <attribute name="attrs">{'invisible' :[('internal_ref_name_2', '!=',
+                        'drops'),('internal_ref_name_2', '!=', 'others')]}</attribute>
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+                <xpath expr="//group/field[@name='new_quantity']" position="after">
+                    <field name="internal_ref_name_2" invisible='1' />
+                </xpath>
+                <!-- RENAMAING PRODUCAT TO MATERIAL CODE -->
+                <xpath expr="//group/field[3]" position="attributes">
+                    <attribute name="string">Material Code</attribute>
+                </xpath>
+                <!-- CHANGE LOCATION TO REAFONLY -->
+                <xpath expr="//group/field[4]" position="attributes">
+                    <attribute name="readonly">True</attribute>
+
+                </xpath>
+                <!-- ADDING EMPLOYEE NAME: THE WHO PUNCH THE PRODUCT -->
+                <xpath expr="//group/field[6]" position="after">
+                    <field name="employee_name" required="True" />
+                </xpath>
+                <!-- HIDING LOCATION -->
+                <xpath expr="//group/field[@name='location_id']" position="attributes">
+
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group/field[7]" position="after">
+                    <field name="new_quantity2" readonly='True' widget="integer" />
+                </xpath>
+                <xpath expr="//group/field[8]" position="after">
+                    <field name="date_time" />
+                </xpath>
+                <xpath expr="//group/field[9]" position="after">
+                    <field name="new_quantity3" invisible='True'/>
+                </xpath>
+                <xpath expr="//group" position="after">
+                    <notebook>
+                        <page string="Product Items"
+                            attrs="{'invisible': [('internal_ref_name_2','=','catv5')]}">
+                            <field name="etsi_product_items">
+                                <tree editable="bottom">
+                                    <field name="etsi_serial_product" required="1" />
+                                    <field name="etsi_mac_product" required="1" />
+                                    <field name="etsi_status_product" invisible="True" />
+                                    <field name="etsi_product_id_product" invisible='True'></field>
+                                    <field name="etsi_product_name_product" invisible='True'></field>
+                                    <field name="etsi_quantity" invisible='True'></field>
+                                    <field name="etsi_product_type" invisible='True'></field>
+                                    <!-- ADDING ADDITION FIELDS LIKE DATES -->
+                                    <field name="etsi_receive_date" invisible='1'></field>
+                                    <field name="etsi_subscriber" invisible='1' />
+                                    <field name="etsi_date_issued" invisible='1' />
+                                    <field name="etsi_date_returned" invisible='1' />
+                                    <field name="etsi_team" invisible='1' />
+                                    <field name="etsi_punch_time" />
+                                    <field name="checkbox_duplicate" readonly="1" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+                <xpath expr="//notebook/page" position="after">
+                    <page string="Product Items"
+                        attrs="{'invisible': [('internal_ref_name_2','=','broadband')]}">
+                        <field name="etsi_product_items_2">
+                            <tree editable="bottom">
+                                <field name="etsi_serial_product_2" />
+                                <field name="etsi_smart_card_product_2" />
+                                <field name="etsi_status_product_2" invisible="True" />
+                                <field name="etsi_product_id_product_2" invisible='True'></field>
+                                <field name="etsi_product_name_product_2" invisible='True'></field>
+                                <field name="etsi_quantity_2" invisible='True'></field>
+                                <field name="etsi_product_type_2" invisible='True'></field>
+                                <!-- ADDING ADDITION FIELDS LIKE DATES -->
+                                <field name="etsi_receive_date2" invisible='1' />
+                                <field name="etsi_subscriber2" invisible='1' />
+                                <field name="etsi_date_issued2" invisible='1' />
+                                <field name="etsi_date_returned2" invisible='1' />
+                                <field name="etsi_team2" invisible='1' />
+                                <field name="etsi_punch_time_2" />
+                                <field name="checkbox_duplicate_2" readonly="1" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//notebook" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible' :['|',('internal_ref_name_2', '=','drops'),('internal_ref_name_2', '=', 'others')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//group/field[@name='new_quantity2']" position="attributes">
+                    <attribute name="attrs">{'invisible' :['|',('internal_ref_name_2', '=',
+                        'drops'),('internal_ref_name_2', '=', 'others')]}</attribute>
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!--RENAMING PLACEHOLDER AND NAME "PRODUCT NAME AS MATERIAL CODE"  -->
+        <record id="inherit_view_id_inherit_product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.form.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/div[2]/label[1]" position="attributes">
+                    <attribute name="string">Material Code</attribute>
+                </xpath>
+                <xpath expr="//sheet/div[2]/h1/field[@name='name']" position="attributes">
+                    <attribute name="placeholder">Material Code</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- HIDING UNNECESSARY FIELDS -->
+        <record id="inherit_product_template_tree_view" model="ir.ui.view">
+            <field name="name">product.name.product.template.tree.view.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view" />
+            <field name="arch" type="xml">
+                <!-- HIDING list_price -->
+                <xpath expr="//tree/field[@name='list_price']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- HIDING standard_price -->
+                <xpath expr="//tree/field[@name='standard_price']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- HIDING FIELDS IN KANBAN -->
+        <record id="product_template_kanban_view" model="ir.ui.view">
+            <field name="name">product.template.kanban.view.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_kanban_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//kanban/templates/t/div/div[2]/ul/li[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//kanban/templates/t/div/div[2]/ul/li[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//kanban/templates/t/div/div[2]/ul/li" position="after">
+                    <li invisible="1">Drops
+                        Category Code: <field name="drops_reference_id" invisible="1"/></li>
+                </xpath>
+                <xpath expr="//kanban/templates/t/div/div[2]/ul/li[3]" position="after">
+                    <li>On hand: <field name="real_quantityWH" />  <field name="uom_id" /></li>
+                </xpath>
+                <xpath expr="//kanban/templates/t/div/div[2]/ul/li[3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- <record id="product_template_kanban_view_3" model="ir.ui.view">
+            <field name="name">product.template.kanban.view.inherit.3</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="etsi_asset.mod_product_template_kanban_views" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//kanban/templates/t/div/div[2]/ul/font" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//kanban/templates/t/div/div[2]/ul/field[@name='standard_price']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record> -->
+
+
+        <!-- ADDING TOTAL NUMBER OF PRODUCT IN INVENTORY -->
+        <record id="product_template_qty_available_tree_inherit" model="ir.ui.view">
+            <field name="name">product.template.qty.available.tree.view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.view_stock_product_template_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='qty_available']" position="attributes">
+                    <attribute name="widget">integer</attribute>
+                    <attribute name="sum">Total</attribute>
+                </xpath>
+                <xpath expr="//field[@name='virtual_available']" position="attributes">
+                    <attribute name="widget">integer</attribute>
+                    <attribute name="sum">Total</attribute>
+                </xpath>
+            </field>
+        </record>
+        <!-- ONHAND BECOME INTEGER -->
+        <record id="stock_quant_view_stock_quant_tree" model="ir.ui.view">
+            <field name="name">stock.quant.view.stock.quant.tree</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.view_stock_quant_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[2]" position="attributes">
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+                <xpath expr="//tree/field[10]" position="attributes">
+                    <attribute name="widget">integer</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

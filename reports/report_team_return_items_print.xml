@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <template id="external_layout_barcode_right" inherit_id="report.external_layout" primary="True">
+            <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+                <attribute name="t-call">stock.external_layout_header_barcode_right</attribute>
+            </xpath>
+        </template>
+
+        <template id="external_layout_header_barcode_right" inherit_id="report.external_layout_header" primary="True">
+            <xpath expr="//div[@name='company_address']" position="after">
+                <div class="col-xs-4 pull-right mt8" name="right_box">
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:50px;"/>
+                    <p>  <span t-field="o.name"/></p>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="team_return_report_view">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="stock.external_layout_barcode_right">
+                    <link rel="stylesheet" href="/skycable_employee_inventory/static/src/style.css"/>
+                        <div class="page">
+                            <h1 class="text-center">Team Return Item Reports</h1>
+                           
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            
+                        
+
+                            <table class="table table-condensed"  style=" border: 1px solid;  width: 100%; table-layout: auto;">
+                             
+                                    
+                            
+                                <thead  style=" border: 1px solid; "  >
+                                            
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>PRODUCT</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>SERIAL ID</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>MAC ID</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>SMART CARD</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>TEAM</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>PRODUCT STATUS</strong></th>
+                                </thead>
+
+                                
+                                <tbody  style=" border: 1px solid; ">
+                                    
+                                   
+                                    
+                                    
+                                        <tr style=" border: 1px solid; " t-foreach='o.return_items' t-as='line' >
+                                    
+                                        
+                                            <td style=" border: 1px solid;  text-align: center; "> 
+                                                <span t-field="line.product_id" />  
+                                            </td>
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                               <span t-field="line.etsi_serial_product" />
+                                            </td>
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.etsi_mac_product" />
+                                            </td>
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.etsi_smart_card" />
+                                            </td>
+
+                                            <!-- <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.quantity" />
+                                                <span> 1 </span>
+                                            </td> -->
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-esc="line.teams.team_number" />
+                                            </td>
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-esc="line.issued" />
+                                            </td>
+
+                                            <!-- add team from  -->
+                                            
+                                     
+                                            
+                                        </tr>
+                                    
+                                </tbody>
+                            </table>
+                            <br/> <br/>
+                            <br/> <br/>
+                            <!-- <h5 >ENCODE BY:  <span t-esc="request.env.user.name"/> </h5> -->
+
+                            <t t-foreach="request.env['hr.employee'].search([])" t-as="obj">
+                                <t t-if="int(obj.job_id) == 3593">
+                                <h5 class="text-left" >WAREHOUSE IN-CHARGE:_________________
+                                <!-- <span t-esc="obj.name"/> -->
+                                 </h5>
+                                </t>
+                                </t>
+                                
+                            <h5 >SIGNATURE:_________________</h5>
+                         
+                            <p t-field="o.note"/>
+                            
+                            <div class="col-xs-5" style=" position: absolute; top: 90px; right: 1px; ">
+                 
+                               
+                                <p><strong>Source Location:</strong>    <span t-field="o.location_id"/></p>
+                                <p><strong>Destination Location:</strong>    <span t-field="o.location_dest_id"/></p>
+                                <!-- <p><strong>Team code:</strong>    <span t-field="o.etsi_teams_id"/></p> -->
+                          
+                            </div> 
+                      
+
+                            
+                            <div class="col-xs-5" style=" position: absolute; top: 90px; left: 1px; ">
+                                <p><strong>Encode By:</strong>    <span t-esc="request.env.user.name"/></p>
+                                <p><strong>Returned Date:</strong>  <span t-field="o.date"/></p>
+                                <!-- <p><strong>Scheduled Date:</strong>    <span t-field="o.min_date"/></p> -->
+                                <!-- <p><strong>State:</strong>   <span t-field="o.state"/></p> -->
+                                
+                                <p><strong> Transaction Number:</strong><spant t-field="o.name"/></p>
+                             </div>
+                        </div>
+
+                    </t>
+                 </t>
+             </t>
+        </template>
+    </data>
+</odoo>

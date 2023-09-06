@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <record id="landscape_format" model="report.paperformat">
+   <field name="name">Custom A4</field>
+      <field name="format">A4</field>
+      <field name="orientation">Landscape</field>
+      <field name="margin_top">40</field>
+      <field name="margin_bottom">23</field>
+      <field name="margin_left">7</field>
+      <field name="margin_right">7</field>
+      <field name="header_line" eval="False"/>
+      <field name="header_spacing">35</field>
+      <field name="dpi">90</field>
+   </record>
+   <report 
+      id="report_xml"
+      model="stock.picking"
+      string="Team Issuance Report"
+      name="skycable_employee_inventory.report_view"
+      file="skycable_employee_inventory.report_view"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      menu = "False"
+      />
+      
+      
+
+   <report 
+      id="configuration_report_xml"
+      model="hr.employee"
+      string="Teams history Report"
+      name="skycable_employee_inventory.configuration_report_view"
+      file="skycable_employee_inventory.configuration_report_view"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      />
+
+      <!-- for view all serial -->
+      <report 
+      id="view_all_serial_xml"
+      model="etsi.inventory"
+      string="All Serial"
+      name="skycable_employee_inventory.all_serial_report"
+      file="skycable_employee_inventory.all_serial_report"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      />
+
+      <report 
+      id="data_entry_report"
+      model="stock.inventory"
+      string="Data Entry Report"
+      name="skycable_employee_inventory.data_entry"
+      file="skycable_employee_inventory.data_entry"
+      report_type="qweb-pdf"
+      paperformat="landscape_format"
+      />    
+      
+      <!-- for drop issuance -->
+      <report 
+      id="drop_issuance_report_xml"
+      model="stock.drops.issuance"
+      string="Drop Issuance Print"
+      name="skycable_employee_inventory.drop_issuance_report"
+      file="skycable_employee_inventory.drop_issuance_report"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      />
+
+ <!-- Subscriber  Issuance Report-->
+      <report 
+      id="subs_report_xml"
+      model="stock.picking"
+      string="Subscriber Issuance Report"
+      name="skycable_employee_inventory.subs_report_view"
+      file="skycable_employee_inventory.subs_report_view"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      menu = "False"
+      />
+
+     <!-- TEAM RETURN  ITEM Report-->
+      <report 
+      id="team_return_report_xml"
+      model="stock.picking"
+      string="Team Return Item Report"
+      name="skycable_employee_inventory.team_return_report_view"
+      file="skycable_employee_inventory.team_return_report_view"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      menu = "False"
+      /> 
+      
+      <!-- TEAM RETURN  ITEM Report-->
+      <report 
+      id="damage_return_report_xml"
+      model="stock.picking"
+      string="Damage Return Report"
+      name="skycable_employee_inventory.damage_return_report_view"
+      file="skycable_employee_inventory.damage_return_report_view"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      menu = "False"
+      />
+
+      <!-- PULL-OUT RECEIVE PRINT -->
+      <report 
+      id="pull_out_recieve_report_xml"
+      model="stock.picking"
+      string="Pull-Out Receive Report"
+      name="skycable_employee_inventory.pull_out_recieve_view"
+      file="skycable_employee_inventory.pull_out_recieve_view"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      menu = "False"
+      />
+
+      <!-- PULL-OUT DELIVERY TO SKY PRINT -->
+      <report 
+      id="pull_out_delivery_report_xml"
+      model="stock.picking"
+      string="Pull-Out Delivery to Sky Report"
+      name="skycable_employee_inventory.pull_out_delivery_view"
+      file="skycable_employee_inventory.pull_out_delivery_view"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      menu = "False"
+      />
+
+      <!-- PULL-OUT DELIVERY FORM TO SKY PRINT -->
+      <report 
+      id="pull_out_delivery_form_xml"
+      model="stock.picking"
+      string="Pull-Out Delivery to Sky Report Form"
+      name="skycable_employee_inventory.pull_out_delivery_form"
+      file="skycable_employee_inventory.pull_out_delivery_form"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      menu = "False"
+      />
+
+      <!-- PULL-OUT PREVIEW FORM TO SKY PRINT -->
+      <report 
+      id="pull_out_delivery_form_xml_preview"
+      model="stock.picking"
+      string="Pull-Out Delivery to Sky Report Form"
+      name="skycable_employee_inventory.pull_out_delivery_form_preview"
+      file="skycable_employee_inventory.pull_out_delivery_form_preview"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+      menu = "False"
+      />
+
+
+   <!-- view all pull-out -->
+      <report 
+      id="view_all_pull_out_delivery_xml"
+      model="etsi.pull_out.inventory"
+      string="View All Pull-Out"
+      name="skycable_employee_inventory.view_all_pull_out_report"
+      file="skycable_employee_inventory.view_all_pull_out_report"
+      report_type="qweb-html"
+      paperformat="landscape_format"
+   
+      />
+      
+   <!-- Print buttons -->
+    <record id="view_pullout_inherit_report" model="ir.ui.view">
+            <field name="name">stock.pullout.view.form.inherit.report</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <!-- Hide the print button -->
+                <xpath expr="//header/button[@name='action_cancel']" position="after">
+                <button name="%(report_xml)d" string="Team Issuance Report"  type="action"  class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|', ('teller','!=','others'), ('state','!=','done')]}"/>
+               
+                <button name="%(team_return_report_xml)d" string="Team Return Report"  type="action"  class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|', '|', '|', ('teller','!=','return'), ('state','!=','done'), ('return_items','=', False)]}"/>
+                <button name="%(subs_report_xml)d" string="Subscriber Isuance Report"  type="action"  class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|', ('teller','!=','subscriber'), ('state','!=','done')]}"/>
+                <button name="%(damage_return_report_xml)d" string="Damage Return Report"  type="action"  class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|', ('teller','!=','damage'), ('state','!=','done')]}"/>
+                <button name="%(pull_out_recieve_report_xml)d" string="Pullout Receive Report"  type="action"  class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|', ('teller','!=','pull-out'), ('state','!=','done')]}"/>
+                <button name="%(pull_out_delivery_form_xml)d" string="Delivery Form"  type="action"  class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|','|', ('teller','!=','pull-out-return'), ('status_field','!=','waiting'), ('state','=','done')]}"/>
+                <button name="%(pull_out_delivery_report_xml)d" string="Pullout  Return Report"  type="action"  class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|', ('teller','!=','pull-out-return'), ('state','!=','done')]}"/>
+                <button name="%(pull_out_delivery_form_xml_preview)d" string="Delivery Form "  type="action"  class="oe_highlight" groups="base.group_user" attrs="{'invisible': ['|','|', ('teller','!=','pull-out-return'), ('status_field','!=','draft'),('state','=','done')]}"/>
+                </xpath>
+    </field>
+    </record>
+
+
+</odoo>

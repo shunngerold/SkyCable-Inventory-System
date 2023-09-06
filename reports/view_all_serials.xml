@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <template id="all_serial_report">
+            <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+            <link rel="stylesheet" href="/team-configuration/static/src/css/style.css"/>
+                <div class="page">
+                    
+                    <h1 class="text-center">View All Serial</h1>
+                            <br/>
+
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                        <table class="table table-condensed"  style=" border: 1px solid; page-break-inside: avoid;">
+                        <thead  style=" border: 1px solid; ">
+                                <th style=" border: 1px solid;"><strong>Type</strong></th>
+                                <th style=" border: 1px solid;"><strong>Product</strong></th>
+                                <th style=" border: 1px solid;"><strong>Description</strong></th>
+                                <th style=" border: 1px solid;"><strong>Serial No.</strong></th>
+                                <th style=" border: 1px solid;"><strong>MAC ID</strong></th>
+                                <th style=" border: 1px solid;"><strong>Smart Card</strong></th>
+                                <th style=" border: 1px solid;"><strong>Employee</strong></th>
+                                
+                                <th style=" border: 1px solid;"><strong>Punch Time</strong></th>
+                                <!-- <th><strong>Subscriber</strong></th> -->
+                                <th style=" border: 1px solid;"><strong>Receive</strong></th>
+                                <!-- <th><strong>Date Issued</strong></th> -->
+                                <!-- <th><strong>Date returned</strong></th> -->
+                                <!-- <th><strong>Team</strong></th> -->
+                                <th style=" border: 1px solid;"><strong>Status</strong></th>
+                                
+                        </thead>
+
+                        <tbody  style=" border: 1px solid; ">
+                            <t t-foreach="table1" t-as="rec">
+                                <tr style=" border: 1px solid;">
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['type_checker']"/>
+                                    </td >
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['etsi_product_id']"/>
+                                    </td>
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['etsi_description']"/>
+                                    </td>  
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['etsi_serial']"/>
+                                    </td>
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['etsi_mac']"/>
+                                    </td>
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['etsi_smart_card']"/>
+                                    </td>
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['etsi_employee_in']"/>
+                                    </td>
+                                    
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['etsi_punched_date_in']"/>
+                                    </td>
+                                    <!-- <td>
+                                        <t t-esc="rec['etsi_subscriber_in']"/>
+                                    </td> -->
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['etsi_receive_date_in']"/>
+                                    </td>
+                                    <!-- <td>
+                                        <t t-esc="rec['etsi_date_issued_in']"/>
+                                    </td> -->
+                                    <!-- <td>
+                                        <t t-esc="rec['etsi_date_returned_in']"/>
+                                    </td> -->
+                                    <!-- <td>
+                                        <t t-esc="rec['etsi_team_in']"/>
+                                    </td> -->
+                                    <td style=" border: 1px solid;">
+                                        <t t-esc="rec['etsi_status']"/>
+                                    </td>  
+                                    
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br/> <br/>
+                    <br/> <br/>
+                    <div style=" page-break-inside: avoid;">
+                        <!-- <h5 class="text-left">ENCODE BY: <span t-esc="request.env.user.name"/></h5> -->
+                        <h5 class="text-left">SIGNATURE: ______________________</h5>
+                    </div>
+                    <div class="col-xs-5" style=" position: absolute; top: 90px; left: 1px; ">
+                        
+                        <p><strong>Date:</strong>  <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/></p>
+                        <p><strong>Encode By:</strong>  <span t-esc="request.env.user.name"/></p>
+                        
+                    </div>
+                    
+                </div>
+              </t>  
+            </t>
+        </template>
+    </data>
+</odoo>

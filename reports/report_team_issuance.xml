@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <template id="external_layout_barcode_right" inherit_id="report.external_layout" primary="True">
+            <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+                <attribute name="t-call">stock.external_layout_header_barcode_right</attribute>
+            </xpath>
+        </template>
+
+        <template id="external_layout_header_barcode_right" inherit_id="report.external_layout_header" primary="True">
+            <xpath expr="//div[@name='company_address']" position="after">
+                <div class="col-xs-4 pull-right mt8" name="right_box">
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:50px;"/>
+                    <p>  <span t-field="o.name"/></p>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="report_view">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="stock.external_layout_barcode_right">
+                    <link rel="stylesheet" href="/skycable_employee_inventory/static/src/style.css"/>
+                        <div class="page">
+                            <h1 class="text-center">Team Issuance Reports</h1>
+                            
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            
+                            
+                            <h5>
+                            <!-- <t t-if="line.etsi_serials_field == False">
+                            </t>
+                            <t t-else="line.etsi_serials_field == line.etsi_serials_field"> -->
+                            <strong>CPE</strong>
+                            <!-- </t> -->
+                            </h5>
+
+
+
+                            <table class="table table-condensed"  style=" border: 1px solid;  width: 100%; table-layout: auto;">
+                             
+                                    
+                            
+                                <thead  style=" border: 1px solid; " >
+                                    <!-- <t t-if="line.etsi_serials_field == False">
+                                            
+                                    </t>
+                                    <t t-else="line.etsi_serials_field == line.etsi_serials_field"> -->
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>MATL. CODE</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>SERIAL NO.</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>MAC ID</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>SMART CARD</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>STATUS</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>QUANTITY</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>DESCRIPTION</strong></th>
+                                    <!-- </t> -->
+                                </thead>
+
+                                
+                                <tbody  style=" border: 1px solid; ">
+                                    
+                                   
+                                    
+                                    
+                                        <tr t-foreach='o.move_lines' t-as='line' style=" border: 1px solid; ">
+                                           
+                                        <t t-if="line.etsi_serials_field == False">
+                                            
+                                      
+                                        </t>
+                                        
+                                        <t t-else="line.etsi_serials_field == line.etsi_serials_field">
+                                            <td style=" border: 1px solid;  text-align: center; "> 
+                                                    <span t-field="line.product_id" />
+                                               
+                                            </td>
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                                <img t-att-src="'/report/barcode/Code128/'+line.etsi_serials_field" style="width:240px;height:20px;"/>
+                                                <p> <span t-field="line.etsi_serials_field" /></p>
+                                            </td>
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.etsi_mac_field" />
+                                            </td>
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.etsi_smart_card_field" />
+                                            </td>
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-field="line.issued_field" />
+                                            </td>
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-esc="'%.0f'% line.product_uom_qty" />
+                                            </td>
+
+                                            <td style=" border: 1px solid;  text-align: center; ">
+                                                <span t-esc="line.etsi_description_txt" />
+                                            </td>
+
+                                       
+                                        </t>
+                                            
+                                        </tr>
+                                    
+                                </tbody>
+                            </table>
+                          
+
+
+                          
+                            <h5 > 
+                                <!-- <t t-foreach='o.move_lines' t-as='line'>
+                                <t t-if="line.etsi_serials_field == False"> -->
+                                <strong>DROPS AND MATERIALS</strong>
+                                <!-- </t> -->
+                             
+                                <!-- <t t-else="line.etsi_serials_field == line.etsi_serials_field">
+                                </t>
+                                </t> -->
+                            </h5>
+                           
+                            <table class="table table-condensed"  style=" border: 1px solid; width: 100%; table-layout: auto;">
+                               
+                                
+                                <thead  style=" border: 1px solid; " >
+                               
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>MATL. CODE</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>STATUS</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>QUANTITY</strong></th>
+                                        <th style=" border: 1px solid;  text-align: center;"><strong>DESCRIPTION</strong></th>
+                                  
+                              
+                                </thead>
+
+                                <tbody  style=" border: 1px solid; ">
+                                    
+                                   
+                                    
+                                    
+                                        <tr   t-foreach='o.move_lines' t-as='line'>
+                                      
+                                            <t t-if="line.etsi_serials_field == False">
+                                                <td style=" border: 1px solid;  text-align: center;">
+                                                    <span t-field="line.product_id" />
+                                                </td>
+
+                                                <td style=" border: 1px solid;  text-align: center;">
+                                                    <span t-field="line.issued_field" />
+                                                </td>
+
+                                                <td style=" border: 1px solid;  text-align: center;">
+                                                    <span t-esc="'%.0f'% line.product_uom_qty" />
+                                                </td>
+
+                                                <td style=" border: 1px solid;  text-align: center; ">
+                                                    <span t-esc="line.etsi_description_txt" />
+                                                </td>
+                                            </t>
+                                 
+                                        </tr>
+                                    
+                                </tbody>
+                            </table>
+                         <h5 > 
+                                <!-- <t t-foreach='o.move_lines' t-as='line'>
+                                <t t-if="line.etsi_serials_field == False"> -->
+                                <strong>TEAMS</strong>
+                                <!-- </t> -->
+                             
+                                <!-- <t t-else="line.etsi_serials_field == line.etsi_serials_field">
+                                </t>
+                                </t> -->
+                            </h5>
+                            
+                            <table class="table table-condensed" style=" border: 1px solid; width: 100%; table-layout: auto;">
+                            
+                                <thead  style=" border: 1px solid; ">
+                                        <th style=" border: 1px solid;  text-align: center; "><strong>Team code</strong>  </th>
+                                        <th style=" border: 1px solid;  text-align: center; "><strong>Employee name</strong></th>
+                                </thead>
+
+                                <tbody  style=" border: 1px solid; ">
+                                    <tr t-foreach='o.etsi_teams_line_ids' t-as='line'>
+                                        <td style=" border: 1px solid;  text-align: center; ">
+                                            <span t-field="o.etsi_teams_id" />
+                                        </td>
+                                        <td style=" border: 1px solid;  text-align: center; ">
+                                             <t t-if="line.etsi_teams_temporary == True">
+                                                 <span t-field="line.etsi_teams_replace" />
+                                             </t>
+                                             <t t-if="line.etsi_teams_temporary == False">
+                                                 <span t-field="line.team_members_lines" />
+                                             </t>
+                                           
+
+                                            <!-- #replaceTeam team etsi_teams_replace -->
+                                            <!-- #boolean etsi_teams_temporary -->
+                                            <!-- #temporary team team_members_lines -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/> <br/>
+                            <br/>
+                 
+                            <p t-field="o.note"/>
+                            
+                            <div class="col-xs-5" style=" position: absolute; top: 90px; right: 1px; ">
+                                <p><strong>Encode By:</strong>    <span t-esc="request.env.user.name"/></p>
+                                <p><strong>Source Location:</strong>    <span t-field="o.location_id"/></p>
+                                <p><strong>Destination Location:</strong>    <span t-field="o.location_dest_id"/></p>
+                            </div> 
+                      
+
+                            
+                            <div class="col-xs-5" style=" position: absolute; top: 90px; left: 1px; ">
+                                <!-- <p><strong>Date:</strong>  <span t-field="o.date"/></p> -->
+                                <p><strong>Issuance Date:</strong>    <span t-field="o.min_date"/></p>
+                                <p><strong>Team code:</strong>    <span t-field="o.etsi_teams_id"/></p>
+                                <!-- <p><strong>State:</strong>   <span t-field="o.state"/></p> -->
+                                
+                                <p><strong> Transaction Number:</strong><spant t-field="o.name"/></p>
+                             </div>
+
+                             <div style=" page-break-inside: avoid;">
+                                <!-- <h5 >ENCODE BY:  <span t-esc="request.env.user.name"/> </h5> -->
+                                <t t-foreach="request.env['hr.employee'].search([])" t-as="obj">
+                                <t t-if="int(obj.job_id) == 3593">
+                                <h5 class="text-left" >WAREHOUSE IN-CHARGE: _________________
+                                <!-- <span t-esc="obj.name"/>  -->
+                                </h5>
+                                </t>
+                                </t>
+                                
+                                <h5 >SIGNATURE:_________________</h5>
+                                <!-- <h5 style="padding-left: 100px;"><span t-esc="o.etsi_teams_member_name.name"/> </h5> -->
+                                
+                                <!-- <t t-foreach="request.env['hr.employee'].search([])" t-as="obj">
+                                <t t-if="int(obj.job_id) == 3593">
+                                <h5 class="text-left" style=" padding-right: 130px;">Warehouse Manager: <span t-esc="obj.name"/> </h5>
+                                </t>
+                                </t> -->
+
+                            </div>
+                        </div>
+                        <!-- <div class="footer">
+                            <h5 class="text-right" style=" padding-right: 130px;">ENCODE BY: Administrator </h5>
+                            <h5 class="text-right">RECIEVED SIGNATURE:__________________</h5>
+                        </div> -->
+                  
+                    </t>
+                 </t>
+             </t>
+        </template>
+    </data>
+</odoo>
+

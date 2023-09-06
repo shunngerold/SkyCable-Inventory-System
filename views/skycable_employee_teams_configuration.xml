@@ -1,0 +1,108 @@
+<odoo>
+    <data>
+        <!-- action window -->
+        <record id="team_configuration_action" model="ir.actions.act_window">
+            <field name="name">Team Configuration</field>
+            <field name="res_model">team.configuration</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <!-- search view -->
+        <record id="team_configuration_view_search" model="ir.ui.view">
+            <field name="name">team_configuration.view.search</field>
+            <field name="model">team.configuration</field>
+            <field name="arch" type="xml">
+                <search string="">
+                    <filter name="1-man team" string="1-man Team"
+                        domain="[('teamType', '=', 'one_man')]" />
+                    <filter name="1-man team" string="1-man Team"
+                        domain="[('teamType', '=', 'one_man')]" context="{'group_by': 'teamType'}" />
+                    <filter name="2-man team" string="2-man Team"
+                        domain="[('teamType', '=', 'two_man')]" />
+                    <filter name="2-man team" string="2-man Team"
+                        domain="[('teamType', '=', 'two_man')]" context="{'group_by': 'teamType'}" />
+                </search>
+            </field>
+        </record>
+
+        <!-- view form -->
+        <record id="team_configuration_view_form" model="ir.ui.view">
+            <field name="name">team.configuration.view.form</field>
+            <field name="model">team.configuration</field>
+            <field name="arch" type="xml">
+                <form string="team configuration">
+                    <sheet>
+                        <group>
+                            <field name="team_number" readonly="1" />
+                            <field name="teamType" required="1" string="Team Type" />
+                        </group>
+                        <field name="team_members">
+                            <tree editable='bottom'>
+                                <field name="team_members_lines" string="Team Member" required="1" />
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree view -->
+        <record id="team_configuration_view_tree" model="ir.ui.view">
+            <field name="name">team.configuration.view.tree</field>
+            <field name="model">team.configuration</field>
+            <field name="arch" type="xml">
+                <tree string="team configuration">
+                    <field name="team_number" />
+                    <field name="team_members" />
+                    <field name="teamType" string="Team Type" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- employee configuration -->
+        <record id="teams_page" model="ir.ui.view">
+            <field name="name">teams.page</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[5]" position="after">
+                    <page name="teams_page" string="Teams">
+                        <group>
+                            <field name="team_number_id" string="Team Code" />
+                        </group>
+                        <field name="history" string="History" readonly='True'>
+                            <tree create="false" delete="false"
+                                decoration-success="status=='permanent'"
+                                decoration-danger="status=='removed'"
+                                decoration-warning="status=='temporary'">
+                                <field name="team_number_team" string="Team Code History" />
+                                <field name="transaction_number" />
+                                <field name="status" />
+                                <field name="teamTypeHistory" string="Team Type" />
+                                <field name='createdDateHistory' string='Date' />
+                                <field name='replaced_by' string='Original Member' />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem
+            id="team_config"
+            name="Teams"
+            web_icon="skycable_employee_inventory,static/img/teams_icon.png"
+            sequence="10" />
+
+        <menuitem
+            id="team_configuration_menu"
+            name="Teams"
+            action="team_configuration_action"
+            groups=""
+            parent="team_config"
+            sequence="" />
+
+    </data>
+</odoo>

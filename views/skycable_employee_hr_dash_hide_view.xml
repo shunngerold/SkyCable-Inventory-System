@@ -1,0 +1,15 @@
+<odoo>
+  <data>
+    <!--Department menu item parent change-->
+    <menuitem id="department_label"
+      name="Department"
+      parent="hr.menu_human_resources_configuration"
+      sequence="90" />
+
+    <menuitem
+      id="hr.menu_hr_department_tree"
+      action="hr.open_module_tree_department"
+      parent="department_label"
+      sequence="90" />
+  </data>
+</odoo>

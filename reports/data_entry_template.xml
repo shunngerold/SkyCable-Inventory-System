@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="external_layout_barcode_right" inherit_id="report.external_layout" primary="True">
+            <xpath expr="//t[@t-call='report.external_layout_header']" position="attributes">
+                <attribute name="t-call">stock.external_layout_header_barcode_right</attribute>
+            </xpath>
+        </template>
+
+        <template id="external_layout_header_barcode_right" inherit_id="report.external_layout_header" primary="True">
+            <xpath expr="//div[@name='company_address']" position="after">
+                <div class="col-xs-4 pull-right mt8" name="right_box">
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:50px;"/>
+                    <p>  <span t-field="o.name"/></p>
+                </div>
+            </xpath>
+        </template>
+
+    <template id="data_entry">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                    <t t-call="stock.external_layout_barcode_right">
+            <!-- <link rel="stylesheet" href="/skycable_employee_inventory/static/src/style.css"/> -->
+                <div class="page">
+                    <h1 class="text-center"><b>Entry for CPE Database</b></h1>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="data-entry-information" style=" position: absolute; top: 90px; left: 1.5rem;">
+                        <p><strong>Inventory Date:</strong>    <span t-field="o.date"/></p>
+                        <p><strong>Date Received:</strong>    <span t-field="o.receive_date_inv"/></p>
+                        <p><strong>Transaction Reference:</strong>    <span t-field="o.name"/></p>
+                    </div>
+                        
+                    <div class="data-entry-information" style=" position: absolute; top: 90px; right: 2rem; ">
+                        <tr t-foreach='o.line_ids' t-as='line'>
+                            <td>
+                                <p><strong>Serial Quantity:</strong> <span t-field="line.product_qty"/></p>
+                            </td>
+                        </tr>
+                            
+                    </div>
+                    
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                    <table class="table table-condensed"  style=" border: 1px solid; ">
+                            
+                        <thead  style=" border: 1px solid; ">
+                            <th ><strong>MATL. CODE</strong></th>
+                            <th style=" border: 1px solid;  text-align: center;"><strong>SERIAL NO.</strong></th>
+                            <th style=" border: 1px solid;  text-align: center;"><strong>SMART CARD</strong></th>
+                        </thead>
+                        
+                        <tbody style=" border: 1px solid; ">
+                            <tr t-foreach='o.etsi_product_detail_2' t-as='line_detail2'>
+                                <td style=" border: 1px solid;  text-align: center;">
+                                    <span t-field="line_detail2.etsi_products_2" />
+                                </td>
+
+                                <td style=" border: 1px solid;  text-align: center;">
+                                    <span t-field="line_detail2.etsi_serials_2" />
+                                </td>
+                                
+                                <td style=" border: 1px solid;  text-align: center;">
+                                    <span t-field="line_detail2.etsi_smart_card_2" />
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <h5 class="text-right">RELEASE BY:__________________</h5>
+                    <h5 class="text-right">SIGNATURE:___________________</h5>
+                    <br/> <br/>
+                    <h5 class="text-right"> RECIEVE BY:__________________</h5>
+                    <h5 class="text-right"> SIGNATURE:__________________</h5>
+                
+                   
+                </div>
+                
+
+                   
+            </t>  
+                
+            </t>
+         </t>
+    </template>
+
+</odoo>
